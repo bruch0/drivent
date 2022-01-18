@@ -9,7 +9,6 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import useApi from "../../hooks/useApi";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import { useForm } from "../../hooks/useForm";
 
 import Input from "../Form/Input";

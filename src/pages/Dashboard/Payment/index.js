@@ -7,10 +7,18 @@ import Button from "@material-ui/core/Button";
 export default function Payment() {
   const [ticket, setTicket] = useState(null);
   const [hotel, setHotel] = useState(null);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setHotel(null);
   }, [ticket]);
+
+  useEffect(() => {
+    const ticketValue = ticket === "Presencial" ? 250 : 100;
+    const hotelValue = hotel ? 350 : 0;
+
+    setTotal(ticketValue + hotelValue);
+  }, [hotel]);
 
   return (
     <>
@@ -58,6 +66,13 @@ export default function Payment() {
           <Value>+ R$ 350</Value>
         </Option>
       </PaymentContainer>
+
+      <Subtitle visibility={ticket === "Online" || hotel !== null ? 1 : 0}>
+        Fechado! O total ficou em <span>R$ {total}</span>. Agora é só confirmar:
+      </Subtitle>
+      <Book visibility={ticket === "Online" || hotel !== null ? 1 : 0}>
+        RESERVAR INGRESSO
+      </Book>
     </>
   );
 }
@@ -99,4 +114,9 @@ const Option = styled(Button)`
 
 const Value = styled(Typography)`
   color: #898989;
+`;
+
+const Book = styled(Button)`
+  background-color: #e0e0e0 !important;
+  display: ${(props) => (props.visibility ? "" : "none !important")};
 `;

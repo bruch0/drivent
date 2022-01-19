@@ -1,4 +1,5 @@
-import { useContext } from "react";
+/* eslint-disable react/jsx-no-bind */
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import Timer from "./Timer";

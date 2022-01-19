@@ -1,3 +1,5 @@
+import HotelSelection from "../../../components/HotelSelection";
+
 export default function Hotel() {
-  return "Hotel: Em breve!";
+  return (<HotelSelection />);
 }

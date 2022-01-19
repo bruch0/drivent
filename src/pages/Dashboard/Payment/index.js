@@ -6,6 +6,11 @@ import Button from "@material-ui/core/Button";
 
 export default function Payment() {
   const [ticket, setTicket] = useState(null);
+  const [hotel, setHotel] = useState(null);
+
+  useEffect(() => {
+    setHotel(null);
+  }, [ticket]);
 
   return (
     <>
@@ -29,6 +34,28 @@ export default function Payment() {
         >
           Online
           <Value>R$ 100</Value>
+        </Option>
+      </PaymentContainer>
+
+      <Subtitle visibility={ticket === "Presencial" ? 1 : 0}>
+        Ótimo! Agora escolha sua modalidade de hospedagem
+      </Subtitle>
+      <PaymentContainer display={ticket === "Presencial" ? "grid" : 0}>
+        <Option
+          selected={hotel === 0 ? 1 : 0}
+          onClick={() => setHotel(0)}
+          variant="outlined"
+        >
+          Sem Hotel
+          <Value>+ R$ 0</Value>
+        </Option>
+        <Option
+          selected={hotel ? 1 : 0}
+          onClick={() => setHotel(1)}
+          variant="outlined"
+        >
+          Com Hotel
+          <Value>+ R$ 350</Value>
         </Option>
       </PaymentContainer>
     </>

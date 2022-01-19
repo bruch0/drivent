@@ -1,10 +1,5 @@
-import { useContext } from "react";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useRouteMatch
-} from "react-router-dom";
+import React, { useContext } from "react";
+import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 
 import EventInfoContext from "../../contexts/EventInfoContext";

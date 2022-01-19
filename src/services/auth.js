@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import api from "./api";
 
 export default class Auth {

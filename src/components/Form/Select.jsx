@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
+
 import ReactDOM from "react-dom";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -34,6 +35,7 @@ export default function MultiSelect({
           input={
             <OutlinedInput
               labelWidth={
+                // eslint-disable-next-line react/no-find-dom-node
                 ReactDOM.findDOMNode(inputLabelRef.current)?.offsetWidth
               }
               name={name}

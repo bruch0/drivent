@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
 
 import styled from "styled-components";
@@ -64,7 +66,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #ddd;
-  box-shadow: 2px 0 10px 0 rgba(0,0,0,0.1);
+  box-shadow: 2px 0 10px 0 rgba(0, 0, 0, 0.1);
   width: 100px;
   flex-shrink: 0;
   justify-content: flex-start;

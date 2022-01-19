@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-function TicketReservation() {
+function TicketReservation({ setPaymentSection }) {
   const [ticket, setTicket] = useState(null);
   const [hotel, setHotel] = useState(null);
   const [total, setTotal] = useState(0);
@@ -70,7 +70,10 @@ function TicketReservation() {
       <Subtitle visibility={ticket === "Online" || hotel !== null ? 1 : 0}>
         Fechado! O total ficou em <span>R$ {total}</span>. Agora é só confirmar:
       </Subtitle>
-      <Book visibility={ticket === "Online" || hotel !== null ? 1 : 0}>
+      <Book
+        onClick={() => setPaymentSection(true)}
+        visibility={ticket === "Online" || hotel !== null ? 1 : 0}
+      >
         RESERVAR INGRESSO
       </Book>
     </>

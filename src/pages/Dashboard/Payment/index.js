@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import useApi from "../../../hooks/useApi";
 import TicketReservation from "../../../components/Payment/Ticket";
-
+import PaymentSection from "../../../components/Payment/PaymentSection";
 import UnauthorizedTab from "../../../components/Shared/UnauthorizedTab";
 
 export default function Payment() {
   const { enrollment } = useApi();
 
   const [enabled, setEnabled] = useState(false);
+  const [paymentSection, setPaymentSection] = useState(false);
 
   enrollment.getPersonalInformations().then((response) => {
     if (response.data.id) setEnabled(true);
   });
 
-  if (enabled) return <TicketReservation />;
+  if (paymentSection) return <PaymentSection />;
+
+  if (enabled)
+    return <TicketReservation setPaymentSection={setPaymentSection} />;
 
   return (
     <UnauthorizedTab

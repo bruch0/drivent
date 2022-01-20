@@ -22,6 +22,7 @@ const RoomContainer = styled.div`
   display: flex;
   height: 45px;
   justify-content: center;
+  margin-bottom: 8px;
   width: 190px;
 `;
 

@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { BsPerson, BsPersonFill } from "react-icons/bs";
 
-export default function RoomDetails() {
+export default function RoomDetails({
+  room: { roomNumber, available, unavailable },
+}) {
   return (
     <RoomContainer>
       <RoomInfoWrapper>
-        <RoomNumber>101</RoomNumber>
+        <RoomNumber>{roomNumber}</RoomNumber>
         <BookingWrapper>
           <BsPerson size={25} />
           <BsPerson size={25} />
@@ -22,7 +24,7 @@ const RoomContainer = styled.div`
   display: flex;
   height: 45px;
   justify-content: center;
-  margin-bottom: 8px;
+  margin: 0 15px 8px 0;
   width: 190px;
 `;
 

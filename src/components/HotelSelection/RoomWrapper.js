@@ -21,7 +21,7 @@ export default function RoomWrapper() {
   return (
     <RoomLayout>
       {rooms.map(room => (
-        <RoomDetails />
+        <RoomDetails key={room.roomNumber} room={room} />
       ))}
     </RoomLayout>
   );
@@ -30,6 +30,5 @@ export default function RoomWrapper() {
 const RoomLayout = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin-right: 8%;
+  margin-right: 5%;
 `;

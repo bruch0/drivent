@@ -9,13 +9,27 @@ export default function RoomDetails({
       <RoomInfoWrapper>
         <RoomNumber>{roomNumber}</RoomNumber>
         <BookingWrapper>
-          <BsPerson size={25} />
-          <BsPerson size={25} />
-          <BsPersonFill size={25} />
+          {getVacancy(available, unavailable).map(availability =>
+            availability ? <BsPerson size={25} /> : <BsPersonFill size={25} />
+          )}
         </BookingWrapper>
       </RoomInfoWrapper>
     </RoomContainer>
   );
+}
+
+function getVacancy(available, unavailable) {
+  const roomVacancy = [];
+
+  for (let i = 0; i < available; i++) {
+    roomVacancy.push(true);
+  }
+
+  for (let i = 0; i < unavailable; i++) {
+    roomVacancy.push(false);
+  }
+
+  return roomVacancy;
 }
 
 const RoomContainer = styled.div`

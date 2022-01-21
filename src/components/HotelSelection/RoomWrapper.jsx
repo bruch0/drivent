@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import RoomDetails from "./RoomDetails";
 import useApi from "../../hooks/useApi";
-import { useState } from "react";
 
 export default function RoomWrapper() {
-  const hotelId = 1; //change this variable according to user hotel selection
+  const hotelId = 1;
   const { hotel } = useApi();
   const [rooms, setRooms] = useState([]);
 

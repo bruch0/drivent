@@ -1,5 +1,21 @@
+import React from "react";
+
 import styled from "styled-components";
 import { BsPerson, BsPersonFill } from "react-icons/bs";
+
+function getVacancy(available, unavailable) {
+  const roomVacancy = [];
+
+  for (let i = 0; i < available; i += 1) {
+    roomVacancy.push(true);
+  }
+
+  for (let i = 0; i < unavailable; i += 1) {
+    roomVacancy.push(false);
+  }
+
+  return roomVacancy;
+}
 
 export default function RoomDetails({
   room: { roomNumber, available, unavailable },
@@ -16,20 +32,6 @@ export default function RoomDetails({
       </RoomInfoWrapper>
     </RoomContainer>
   );
-}
-
-function getVacancy(available, unavailable) {
-  const roomVacancy = [];
-
-  for (let i = 0; i < available; i++) {
-    roomVacancy.push(true);
-  }
-
-  for (let i = 0; i < unavailable; i++) {
-    roomVacancy.push(false);
-  }
-
-  return roomVacancy;
 }
 
 const RoomContainer = styled.div`

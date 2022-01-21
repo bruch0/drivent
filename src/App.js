@@ -25,13 +25,13 @@ export default function App() {
         <UserProvider>
           <Router>
             <Switch>
-              <ConditionalRoute check={ensureCountdownOngoing} path="/" exact>
+              <ConditionalRoute check={ensureCountdownOngoing} path='/' exact>
                 <Countdown />
               </ConditionalRoute>
 
               <ConditionalRoute
                 check={ensureCountdownOver}
-                path="/enroll"
+                path='/enroll'
                 exact
               >
                 <Enroll />
@@ -39,13 +39,13 @@ export default function App() {
 
               <ConditionalRoute
                 check={ensureCountdownOver}
-                path="/sign-in"
+                path='/sign-in'
                 exact
               >
                 <SignIn />
               </ConditionalRoute>
 
-              <ConditionalRoute check={ensureAuthenticated} path="/dashboard">
+              <ConditionalRoute check={ensureAuthenticated} path='/dashboard'>
                 <Dashboard />
               </ConditionalRoute>
             </Switch>

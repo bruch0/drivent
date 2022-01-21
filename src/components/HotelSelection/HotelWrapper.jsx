@@ -1,3 +1,5 @@
+import React from "react";
+
 import { RoomMsg } from "./RoomMsg";
 import RoomWrapper from "./RoomWrapper";
 

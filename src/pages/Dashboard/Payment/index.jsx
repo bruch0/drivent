@@ -17,8 +17,7 @@ export default function Payment() {
 
   if (paymentSection) return <PaymentSection />;
 
-  if (enabled)
-    return <TicketReservation setPaymentSection={setPaymentSection} />;
+  if (enabled) return <TicketReservation setPaymentSection={setPaymentSection} />;
 
   return (
     <UnauthorizedTab

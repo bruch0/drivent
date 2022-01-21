@@ -3,6 +3,7 @@ import UserApi from "../services/UserApi";
 import AuthApi from "../services/auth";
 import CepApi from "../services/CepApi";
 import EnrollmentApi from "../services/EnrollmentApi";
+import PaymentApi from "../services/PaymentApi";
 import HotelApi from "../services/HotelApi";
 
 export default function useApi() {
@@ -12,6 +13,7 @@ export default function useApi() {
     auth: new AuthApi(),
     cep: new CepApi(),
     enrollment: new EnrollmentApi(),
+    payment: new PaymentApi(),
     hotel: new HotelApi(),
   };
 }

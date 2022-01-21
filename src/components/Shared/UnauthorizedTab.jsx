@@ -10,9 +10,10 @@ export default UnauthorizedTab;
 
 const MessageHolder = styled.section`
   width: 100%;
-  height: 100%;
+  height: 80%;
+  max-height: 100%;
   display: flex;
-  align-items: center;
+  align-items: center;  
   justify-content: center;
   padding: 0px 20%;
   color: #8e8e8e;

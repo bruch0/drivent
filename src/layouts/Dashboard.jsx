@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 import Page from "../components/Page";
@@ -19,7 +20,7 @@ const StyledContainer = styled(Container)`
   align-items: stretch;
   flex-direction: row;
   padding: 0;
-  
+
   & > * {
     text-align: initial;
   }

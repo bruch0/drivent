@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 import { useState } from "react";
 
 export const useForm = (options) => {
@@ -21,7 +23,7 @@ export const useForm = (options) => {
     });
   };
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const validations = options?.validations;
     if (validations) {

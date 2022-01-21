@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+/* eslint-disable no-shadow */
+
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DateFnsUtils from "@date-io/date-fns";
 import Typography from "@material-ui/core/Typography";
@@ -9,12 +11,11 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import useApi from "../../hooks/useApi";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import { useForm } from "../../hooks/useForm";
 
 import Input from "../Form/Input";
 import Button from "../Form/Button";
-import Select from "../../components/Form/Select";
+import Select from "../Form/Select";
 import { FormWrapper } from "./FormWrapper";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { InputWrapper } from "./InputWrapper";
@@ -74,6 +75,7 @@ export default function PersonalInformationForm() {
         })
         .catch((error) => {
           if (error.response?.data?.details) {
+            // eslint-disable-next-line no-restricted-syntax
             for (const detail of error.response.data.details) {
               toast(detail);
             }

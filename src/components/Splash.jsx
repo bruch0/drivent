@@ -1,3 +1,5 @@
+import React from "react";
+
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
 
@@ -9,7 +11,9 @@ export default function Splash({ loading = false, message = "" }) {
   return (
     <StyledPage background="#FA4098">
       <Grid>
-        {loading && <StyledLoader color="#FFFFFF" height={26} width={26} type="Oval" />}
+        {loading && (
+          <StyledLoader color="#FFFFFF" height={26} width={26} type="Oval" />
+        )}
         <img src={driventLogo} alt="Driven.t" />
       </Grid>
       {message && <Message>{message}</Message>}
@@ -46,7 +50,7 @@ const Message = styled.div`
   max-width: 320px;
   border-radius: 4px;
   padding: 10px;
-  background-color: rgba(0, 0, 0, .2);
+  background-color: rgba(0, 0, 0, 0.2);
   color: white;
   text-align: center;
 `;

@@ -1,7 +1,31 @@
-import { useState } from "react";
+/* eslint-disable no-plusplus */
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import useInterval from "react-useinterval";
 import styled from "styled-components";
+
+function diffToDate(date) {
+  const now = dayjs();
+  let to = dayjs(date);
+
+  const days = to.diff(now, "days");
+  to = to.add(-days, "days");
+
+  const hours = to.diff(now, "hours");
+  to = to.add(-hours, "hours");
+
+  const minutes = to.diff(now, "minutes");
+  to = to.add(-minutes, "minutes");
+
+  const seconds = to.diff(now, "seconds");
+
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
+}
 
 export default function Timer({ time, onZero = () => 0 }) {
   const [timeRemaining, setTimeRemaining] = useState(diffToDate(time));
@@ -76,7 +100,11 @@ const CountdownBlock = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, .3), rgba(255, 255, 255, .2));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.2)
+  );
   color: #000;
   font-size: 24px;
   width: 110px;
@@ -85,33 +113,10 @@ const CountdownBlock = styled.div`
 `;
 
 const Label = styled.div`
-  opacity: .8;
-  font-size: .72em;
+  opacity: 0.8;
+  font-size: 0.72em;
 `;
 
 const Divider = styled.div`
   font-size: 24px;
 `;
-
-function diffToDate(date) {
-  const now = dayjs();
-  let to = dayjs(date);
-
-  const days = to.diff(now, "days");
-  to = to.add(-days, "days");
-
-  const hours = to.diff(now, "hours");
-  to = to.add(-hours, "hours");
-
-  const minutes = to.diff(now, "minutes");
-  to = to.add(-minutes, "minutes");
-
-  const seconds = to.diff(now, "seconds");
-
-  return {
-    days,
-    hours,
-    minutes,
-    seconds
-  };
-}

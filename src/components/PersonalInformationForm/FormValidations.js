@@ -1,3 +1,7 @@
+function isValidString(value) {
+  return value || value?.trim();
+}
+
 const validations = {
   name: {
     custom: {
@@ -57,7 +61,9 @@ const validations = {
 
   birthday: {
     custom: {
-      isValid: (value) => !value || !isNaN(new Date(value?.split("-").reverse().join("-"))),
+      isValid: (value) =>
+        !value ||
+        !Number.isNaN(new Date(value?.split("-").reverse().join("-"))),
       message: "Selecione uma data de aniversário",
     },
   },
@@ -71,7 +77,3 @@ const validations = {
 };
 
 export default validations;
-
-function isValidString(value) {
-  return value || value?.trim();
-}

@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+/* eslint-disable no-restricted-syntax */
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
@@ -22,7 +23,7 @@ export default function Enroll() {
   const history = useHistory();
 
   const api = useApi();
-  
+
   const { eventInfo } = useContext(EventInfoContext);
 
   function submit(event) {
@@ -32,20 +33,24 @@ export default function Enroll() {
     if (password !== confirmPassword) {
       toast("As senhas devem ser iguais!");
     } else {
-      api.user.signUp(email, password).then(response => {
-        toast("Inscrito com sucesso! Por favor, faça login.");
-        history.push("/sign-in");
-      }).catch(error => {
-        if (error.response) {
-          for (const detail of error.response.data.details) {
-            toast(detail);
+      api.user
+        .signUp(email, password)
+        .then(() => {
+          toast("Inscrito com sucesso! Por favor, faça login.");
+          history.push("/sign-in");
+        })
+        .catch((error) => {
+          if (error.response) {
+            for (const detail of error.response.data.details) {
+              toast(detail);
+            }
+          } else {
+            toast("Não foi possível conectar ao servidor!");
           }
-        } else {
-          toast("Não foi possível conectar ao servidor!");
-        }
-      }).then(() => {
-        setLoadingEnroll(false);
-      });
+        })
+        .then(() => {
+          setLoadingEnroll(false);
+        });
     }
   }
 
@@ -58,10 +63,35 @@ export default function Enroll() {
       <Row>
         <Label>Inscrição</Label>
         <form onSubmit={submit}>
-          <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
-          <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
-          <Input label="Repita sua senha" type="password" fullWidth value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-          <Button type="submit" color="primary" fullWidth disabled={loadingEnroll}>Inscrever</Button>
+          <Input
+            label="E-mail"
+            type="text"
+            fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            label="Senha"
+            type="password"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            label="Repita sua senha"
+            type="password"
+            fullWidth
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <Button
+            type="submit"
+            color="primary"
+            fullWidth
+            disabled={loadingEnroll}
+          >
+            Inscrever
+          </Button>
         </form>
       </Row>
       <Row>

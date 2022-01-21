@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-function TicketReservation({ setPaymentSection }) {
-  const [ticket, setTicket] = useState(null);
-  const [hotel, setHotel] = useState(null);
-  const [total, setTotal] = useState(0);
+function TicketReservation({ setPaymentSection, setTicket, setHotel, setTotal, ticket, hotel, total }) {
 
   useEffect(() => {
     setHotel(null);
@@ -15,7 +12,7 @@ function TicketReservation({ setPaymentSection }) {
 
   useEffect(() => {
     const ticketValue = ticket === "Presencial" ? 250 : 100;
-    const hotelValue = hotel ? 350 : 0;
+    const hotelValue = hotel === 'Com Hotel' ? 350 : 0;
 
     setTotal(ticketValue + hotelValue);
   }, [hotel]);
@@ -50,16 +47,16 @@ function TicketReservation({ setPaymentSection }) {
       </Subtitle>
       <PaymentContainer display={ticket === "Presencial" ? "grid" : 0}>
         <Option
-          selected={hotel === 0 ? 1 : 0}
-          onClick={() => setHotel(0)}
+          selected={hotel === 'Sem Hotel' ? 1 : 0}
+          onClick={() => setHotel('Sem Hotel')}
           variant="outlined"
         >
           Sem Hotel
           <Value>+ R$ 0</Value>
         </Option>
         <Option
-          selected={hotel ? 1 : 0}
-          onClick={() => setHotel(1)}
+          selected={hotel === 'Com Hotel' ? 1 : 0}
+          onClick={() => setHotel('Com Hotel')}
           variant="outlined"
         >
           Com Hotel

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
+import HotelSelection from "../../../components/HotelSelection";
 import UnauthorizedTab from "../../../components/Shared/UnauthorizedTab";
 import useApi from "../../../hooks/useApi";
 
@@ -31,11 +32,7 @@ export default function Hotel() {
   return (
     <>
       <StyledTypography variant="h4">Escolha de hotel e quarto</StyledTypography>
-      {enabled && enrollmentWithHotel ? (
-        "Prosseguir para Página de hotel"
-      ) : (
-        <UnauthorizedTab message={message} />
-      )}
+      {enabled && enrollmentWithHotel ? <HotelSelection /> : <UnauthorizedTab message={message} />}
     </>
   );
 }

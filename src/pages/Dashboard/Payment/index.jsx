@@ -11,13 +11,18 @@ export default function Payment() {
   const [enabled, setEnabled] = useState(false);
   const [paymentSection, setPaymentSection] = useState(false);
 
+  const [ticket, setTicket] = useState(null);
+  const [hotel, setHotel] = useState(null);
+  const [total, setTotal] = useState(0);
+
   enrollment.getPersonalInformations().then((response) => {
     if (response.data.id) setEnabled(true);
   });
 
-  if (paymentSection) return <PaymentSection />;
+  if (paymentSection) return <PaymentSection ticket={ticket} hotel={hotel} total={total} />;
 
-  if (enabled) return <TicketReservation setPaymentSection={setPaymentSection} />;
+  if (enabled)
+    return <TicketReservation setPaymentSection={setPaymentSection} setTicket={setTicket} setHotel={setHotel} setTotal={setTotal} ticket={ticket} hotel={hotel} total={total} />;
 
   return (
     <UnauthorizedTab

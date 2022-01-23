@@ -43,4 +43,5 @@ export default function HotelSelection() {
 
 const HotelsContainer = styled.div`
   display: flex;
+  margin-bottom: 30px;
 `;

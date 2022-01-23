@@ -10,7 +10,6 @@ export default function RoomWrapper(props) {
 
   useEffect(() => {
     hotel.getHotelRooms(hotelId).then((response) => {
-      console.log(hotelId);
       if (response.status !== 200) {
         return;
       }

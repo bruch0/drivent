@@ -14,7 +14,7 @@ export default function HotelPreview(props) {
         </div>
         <div>
           <strong>Vagas Disponíveis</strong>
-          <p>0000</p>
+          <p>{data.vacancy}</p>
         </div>
       </HotelDetails>
     </HotelPreviewWrapper>

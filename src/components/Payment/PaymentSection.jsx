@@ -104,4 +104,3 @@ function PaymentSection({setTicket, setHotel, setTotal, ticket, hotel, total}) {
 }
 
 export default PaymentSection;
-

@@ -1,12 +1,12 @@
-import api from './api';
-import AuthenticatedApi from './AuthenticatedApi';
+import api from "./api";
+import AuthenticatedApi from "./AuthenticatedApi";
 
 export default class PaymentApi extends AuthenticatedApi {
-	getPaymentInfo() {
-		return api.get('/payment', {
-			headers: {
-				...this.getAuthorizationHeader(),
-			},
-		});
-	}
+  getPaymentInfo() {
+    return api.get("/payments", {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      },
+    });
+  }
 }

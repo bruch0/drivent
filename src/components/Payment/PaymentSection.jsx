@@ -1,21 +1,52 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoCheckmarkCircle } from "react-icons/io5"
 import Typography from "@material-ui/core/Typography";
 import Cards from "react-credit-cards"
 import 'react-credit-cards/es/styles-compiled.css';
 import Button from "../Form/Button";
+import useApi from "../../hooks/useApi";
 
-function PaymentSection({ticket, hotel, total}) {
-  const [ number, setNumber] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [expiry, setExpiry] = React.useState('');
-  const [cvc, setCvc] = React.useState('');
-  const [focus, setFocus] = React.useState('');
-  const [paid, setPaid] = React.useState(false);
+function PaymentSection({setTicket, setHotel, setTotal, ticket, hotel, total}) {
+  const { payment } = useApi();
+  const [ number, setNumber] = useState('');
+  const [name, setName] = useState('');
+  const [expiry, setExpiry] = useState('');
+  const [cvc, setCvc] = useState('');
+  const [focus, setFocus] = useState('');
+  const [paid, setPaid] = useState(false);
 
+  useEffect(() => {
+    payment.getPaymentInfo().then((response) => {
+      if (response.data.id) {
+        setPaid(true);
+        setTicket(response.data.ticket);
+        if(response.data.hotel){
+          setHotel('Com Hotel');
+        }else if(response.data.ticket === 'Presencial'){
+          setHotel('Sem Hotel');
+        }
+        setTotal(response.data.value);
+      }
+    });
+  }, [])
   
+  function confirmPayment(){
+    let hotelBoolean;
+    if(hotel === 'Com Hotel'){
+      hotelBoolean = true;
+    }else{
+      hotelBoolean = false;
+    }
+    const paymentData = {
+      ticket, 
+      hotel: hotelBoolean, 
+      value: total,
+    };
+    payment.savePaymentInfo(paymentData).then(() => {
+      setPaid(true);
+    });
+  }  
 
   return (
     <>
@@ -37,7 +68,10 @@ function PaymentSection({ticket, hotel, total}) {
         focused = {focus}
       />
       </div>
-      <Form onSubmit={() => setPaid(true)}>
+      <Form onSubmit={(e) => {
+        e.preventDefault();
+        confirmPayment();
+      } }>
         <Input type="text" name='number' placeholder="Card Number" value={number} onChange={(e) => setNumber(e.target.value)} onFocus={(e) => setFocus(e.target.name)} maxLength={16} required />
         <Input type="text" name='name' placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => setFocus(e.target.name)} required />
         <Wrapper>

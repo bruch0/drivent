@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function HotelPreview(props) {
   const { data, selected, toggleSelection } = props;
   return (
-    <HotelPreviewWrapper selected={selected} onClick={toggleSelection}>
+    <HotelPreviewWrapper selected={selected === data.id} onClick={toggleSelection}>
       <Banner src={data.imageUrl} />
       <HotelName>{data.name}</HotelName>
       <HotelDetails>

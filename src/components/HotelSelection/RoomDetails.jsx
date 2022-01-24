@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-nested-ternary */
 import React, {useEffect, useState} from "react";
 
@@ -19,66 +20,72 @@ function getVacancy(available, unavailable) {
 }
 
 export default function RoomDetails({
-  room: { roomNumber, available, unavailable}, selected, setSelected 
+  room, selected, bookingRoom, 
 }) {
+  const  { roomNumber, available, unavailable} = room  
   const [vacancies, setVacancies] = useState(getVacancy(available, unavailable))
 
-  useEffect(()=>{
+  useEffect(()=>{ // get vacancies
     const updateSelected = () => {
       const isSelected = selected === roomNumber
 
       if (isSelected) {
         setVacancies(getVacancy(available - 1, unavailable + 1))
+        bookingRoom(roomNumber)
       } else {
         setVacancies(getVacancy(available, unavailable))
-      }        
+      } 
     }
 
     updateSelected()
-  }, [selected])
+  }, [selected, available, unavailable])
+
   
   return (
     <>
-    {available === 0}
-    ?
-    (
-      <RoomContainer disabled>
-        <RoomInfoWrapper>
-          <RoomNumber disabled>{roomNumber}</RoomNumber>
-
-          <BookingWrapper>
-            {vacancies.map(<BsPersonFill color="#d1afaf" size={25} />)}
-          </BookingWrapper>
-        </RoomInfoWrapper>
-      </RoomContainer>
-    ) : (
-      <RoomContainer onClick={()=>setSelected(roomNumber)} isSelected={selected === roomNumber}>
-        <RoomInfoWrapper>
-          <RoomNumber>{roomNumber}</RoomNumber>
-
-          <BookingWrapper>
-            {vacancies.map(availability =>
-              availability ? <BsPerson size={25} /> : <BsPersonFill size={25} />
-            )}
-          </BookingWrapper>
-        </RoomInfoWrapper>
-      </RoomContainer>  
-    )   
-    </>    
+      {
+        (available === 0)
+        ?         
+        <RoomContainer disabled >
+          <RoomInfoWrapper>
+            <RoomNumber disabled>{roomNumber}</RoomNumber>
+            <BookingWrapper>
+              {vacancies.map(()=><BsPersonFill color="#9d9d9d" size={25} />)}
+            </BookingWrapper>
+          </RoomInfoWrapper>
+        </RoomContainer>
+        :           
+        <RoomContainer onClick={()=>bookingRoom(roomNumber)} isSelected={selected === roomNumber}>
+          <RoomInfoWrapper>
+            <RoomNumber>{roomNumber}</RoomNumber>
+            <BookingWrapper >
+              {vacancies.map((availability, i) =>
+              availability 
+              ? <BsPerson size={25} /> 
+              : <BsPersonFill 
+                  color={(selected === roomNumber && i === (available - 1)) ? "#FF4791" : "#000000"} 
+                  size={25} 
+                />
+              )}
+            </BookingWrapper>
+          </RoomInfoWrapper>
+        </RoomContainer>
+      }
+      </>
   );
 }
 
 const RoomContainer = styled.div`
   border-radius: 10px;
   border: 1px solid #cecece;
-  cursor: pointer;
+  cursor: ${props=> props.disabled ? 'default' : 'pointer'};
   display: flex;
   height: 45px;
   justify-content: center;
   margin: 0 15px 8px 0;
   width: 190px;
   background-color: ${(props) => {
-    if (props.disabled) return '#9D9D9D'
+    if (props.disabled) return '#E9E9E9'
     if (props.isSelected) return '#FFEED2'
     return '#FFFFFF'
   }};
@@ -98,4 +105,8 @@ const RoomNumber = styled.div`
   font-weight: 700;
 `;
 
-const BookingWrapper = styled.div``;
+const BookingWrapper = styled.div`
+  
+  color: ${(props) => props.children.isSelected ? "#FF4791" : "#000000"};
+  
+`;

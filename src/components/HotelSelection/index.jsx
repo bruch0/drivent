@@ -31,17 +31,13 @@ export default function HotelSelection() {
   }
 
   const confirmBooking = () => {
-    console.log("here")
       const body = {
         hotel: selectedHotelId,
         room: selectedRoom,
       }
-      console.log({body})
       hotel.saveBooking(body).then(()=>{
         setConfirmReservation(true)
-        console.log("then")
       }).catch((error) => {
-        console.log("error")
         if (error.response) {
           // eslint-disable-next-line no-restricted-syntax
           for (const detail of error.response.data.details) {
@@ -51,7 +47,6 @@ export default function HotelSelection() {
           toast("Não foi possível conectar ao servidor!");
         }
       }).finally(()=>{
-        console.log("finally")
         selectHotel(null)
       })
   }

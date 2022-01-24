@@ -31,7 +31,7 @@ export default function RoomDetails({
 
       if (isSelected) {
         setVacancies(getVacancy(available - 1, unavailable + 1))
-        bookingRoom(roomNumber)
+        bookingRoom(selected)
       } else {
         setVacancies(getVacancy(available, unavailable))
       } 

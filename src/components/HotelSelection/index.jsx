@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 import HotelPreview from "./HotelPreview";
@@ -14,12 +16,13 @@ export default function HotelSelection() {
   const [ rooms, setRooms ] = useState([]);
   const [ selectedRoom, setSelectedRoom ] = useState(null)
 
+  const [confirmReservation, setConfirmReservation] = useState(false)
+
   function selectHotel(hotelId) {
     if (selectedHotelId !== hotelId) {
       setSelectedHotelId(hotelId);
     } else {
       setSelectedHotelId(null);
-      setSelectedRoom(null);
     }
   }
 
@@ -28,17 +31,31 @@ export default function HotelSelection() {
   }
 
   const confirmBooking = () => {
+    console.log("here")
       const body = {
         hotel: selectedHotelId,
-        room: selectHotelRoom,
+        room: selectedRoom,
       }
+      console.log({body})
       hotel.saveBooking(body).then(()=>{
-        setRooms([])
-      }).catch((e)=>{
-        console.error(e)
+        setConfirmReservation(true)
+        console.log("then")
+      }).catch((error) => {
+        console.log("error")
+        if (error.response) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const detail of error.response.data.details) {
+            toast(detail);
+          }
+        } else {
+          toast("Não foi possível conectar ao servidor!");
+        }
+      }).finally(()=>{
+        console.log("finally")
+        selectHotel(null)
       })
   }
-  
+
   useEffect(() => { // get hotels
     function setHotelList(){
       hotel.getHotelsList().then((response) => {
@@ -49,6 +66,8 @@ export default function HotelSelection() {
   }, []);
 
   useEffect(() => { // get rooms
+    setSelectedRoom(null);
+
     function setHotelRooms(){
       if(selectedHotelId){
         hotel.getHotelRooms(selectedHotelId).then((response) => {
@@ -64,24 +83,31 @@ export default function HotelSelection() {
 
   return (
     <>
-      <HotelsContainer>
-        {hotels.map((h) => (
-          <HotelPreview
-            key={h.id}
-            data={h}
-            toggleSelection={() => selectHotel(h.id)}
-            selected={selectedHotelId}
-          />
-        ))}
-      </HotelsContainer>
-      {selectedHotelId ? 
-      <> 
-        <HotelWrapper rooms={rooms} selectHotelRoom={selectHotelRoom} selectedRoom={selectedRoom}/> 
-        <ConfirmReserveButton onClick={confirmBooking} enabled={!!selectedRoom}>RESERVAR QUARTO</ConfirmReserveButton>
-      </>
-      : ""}
-      
-    </>
+      {confirmReservation
+        ? 
+        <>
+        </>
+        : 
+        <>
+          <HotelsContainer>
+            {hotels.map((h) => (
+              <HotelPreview
+                key={h.id}
+                data={h}
+                toggleSelection={() => selectHotel(h.id)}
+                selected={selectedHotelId}
+              />
+            ))}
+          </HotelsContainer>
+          {selectedHotelId &&  
+            <> 
+              <HotelWrapper rooms={rooms} selectHotelRoom={selectHotelRoom} selectedRoom={selectedRoom}/> 
+              <ConfirmReserveButton onClick={confirmBooking} enabled={!!selectedRoom}>RESERVAR QUARTO</ConfirmReserveButton>
+            </>
+          }      
+        </> 
+      }
+    </>    
   );
 }
 

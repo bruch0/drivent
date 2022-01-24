@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Container from "../Container";
+import Container from "../Shared/Container";
 
 export const StyledContainer = styled(Container)`
   font-size: 16px;

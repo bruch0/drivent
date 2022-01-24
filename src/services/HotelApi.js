@@ -17,4 +17,12 @@ export default class HotelApi extends AuthenticatedApi {
       },
     });
   }
+
+  saveBooking(body) {
+    return api.post(`/hotels/bookings`, body, {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      }
+    })
+  }
 }

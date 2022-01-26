@@ -22,11 +22,13 @@ import { InputWrapper } from "./InputWrapper";
 import { ErrorMsg } from "./ErrorMsg";
 import { ufList } from "./ufList";
 import FormValidations from "./FormValidations";
+import Loading from "../Shared/Loading";
 
 dayjs.extend(CustomParseFormat);
 
 export default function PersonalInformationForm() {
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { enrollment, cep } = useApi();
   let local = JSON.parse(localStorage.getItem("userData"));
   let email = local?.user.email;
@@ -124,6 +126,8 @@ export default function PersonalInformationForm() {
         addressDetail: address.addressDetail,
       });
     });
+
+    setLoading(false);
   }, []);
 
   function isValidCep(cep) {
@@ -154,6 +158,8 @@ export default function PersonalInformationForm() {
       });
     }
   }
+
+  if (loading) return <Loading />;
 
   return (
     <>

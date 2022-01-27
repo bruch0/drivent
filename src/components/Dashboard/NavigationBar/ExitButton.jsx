@@ -12,21 +12,21 @@ export default function ExitButton() {
 
 const ExitButtonWrapper = styled.div`
   cursor: pointer;
-  border: 2px solid pink;
   color: white;
   border-radius: 6px;
-  background-color: #fa4797c0;
+  background-color: #124090e2;
   padding: 5px 5px;
   text-align: center;
   align-self: center;
-  margin: 0 5%;
+  margin: 0 6%;
   position: absolute;
   bottom: 2.5%;
   left: 0;
   right: 0;
 
   @media (max-width: 600px) {
-    display: inline-block;
     position: relative;
+    margin: 0 2%;
+    padding: 2.5% 2.5%;
   }
 `;

@@ -138,7 +138,7 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
             <p>Pagamento confirmado!</p>
             <span>
               Prossiga para escolha de
-              {hotel === "Sem Hotel" ? "" : " hospedagem "} atividades
+              {hotel === "Com Hotel" ? " hospedagem e " : ""} atividades
             </span>
           </ConfirmationTextContainer>
         </ConfirmationContainer>

@@ -4,15 +4,22 @@ import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-function TicketReservation({ setPaymentSection, setTicket, setHotel, setTotal, ticket, hotel, total }) {
-
+function TicketReservation({
+  setPaymentSection,
+  setTicket,
+  setHotel,
+  setTotal,
+  ticket,
+  hotel,
+  total,
+}) {
   useEffect(() => {
     setHotel(null);
   }, [ticket]);
 
   useEffect(() => {
     const ticketValue = ticket === "Presencial" ? 250 : 100;
-    const hotelValue = hotel === 'Com Hotel' ? 350 : 0;
+    const hotelValue = hotel === "Com Hotel" ? 350 : 0;
 
     setTotal(ticketValue + hotelValue);
   }, [hotel]);
@@ -20,9 +27,7 @@ function TicketReservation({ setPaymentSection, setTicket, setHotel, setTotal, t
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
-      <Subtitle visibility={1}>
-        Primeiro, escolha sua modalidade de ingresso
-      </Subtitle>
+      <Subtitle visibility={1}>Primeiro, escolha sua modalidade de ingresso</Subtitle>
       <PaymentContainer display="grid">
         <Option
           selected={ticket === "Presencial" ? 1 : 0}
@@ -47,16 +52,16 @@ function TicketReservation({ setPaymentSection, setTicket, setHotel, setTotal, t
       </Subtitle>
       <PaymentContainer display={ticket === "Presencial" ? "grid" : 0}>
         <Option
-          selected={hotel === 'Sem Hotel' ? 1 : 0}
-          onClick={() => setHotel('Sem Hotel')}
+          selected={hotel === "Sem Hotel" ? 1 : 0}
+          onClick={() => setHotel("Sem Hotel")}
           variant="outlined"
         >
           Sem Hotel
           <Value>+ R$ 0</Value>
         </Option>
         <Option
-          selected={hotel === 'Com Hotel' ? 1 : 0}
-          onClick={() => setHotel('Com Hotel')}
+          selected={hotel === "Com Hotel" ? 1 : 0}
+          onClick={() => setHotel("Com Hotel")}
           variant="outlined"
         >
           Com Hotel

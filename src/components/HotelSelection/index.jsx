@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
 import HotelPreview from "./HotelPreview";
 import HotelWrapper from "./HotelWrapper";
-import HotelSelected from "./HotelSelected";
 
 export default function HotelSelection() {
   const { hotel } = useApi();
@@ -18,6 +17,7 @@ export default function HotelSelection() {
   const [selectedRoom, setSelectedRoom] = useState(null);
 
   const [confirmReservation, setConfirmReservation] = useState(false);
+  const [isChangingRoom, setIsChangingRoom] = useState(false);
 
   function selectHotel(hotelId) {
     if (selectedHotelId !== hotelId) {
@@ -36,6 +36,20 @@ export default function HotelSelection() {
       hotel: selectedHotelId,
       room: selectedRoom,
     };
+
+    if (isChangingRoom) {
+      hotel.changeRoomStatus(body).catch(error => {
+        if (error.response) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const detail of error.response.data.details) {
+            toast(detail);
+          }
+        } else {
+          toast("Não foi possível conectar ao servidor!");
+        }
+      });
+    }
+
     hotel
       .saveBooking(body)
       .then(() => {
@@ -83,10 +97,17 @@ export default function HotelSelection() {
     setHotelRooms();
   }, [selectedHotelId]);
 
+  const changeRoom = () => {
+    setConfirmReservation(false);
+    setIsChangingRoom(true);
+  };
+
   return (
     <>
       {confirmReservation ? (
-        <HotelSelected />
+        <ChangeRoomButton onClick={changeRoom}>
+          TROCAR DE QUARTO
+        </ChangeRoomButton>
       ) : (
         <>
           <HotelsContainer>
@@ -137,4 +158,19 @@ const ConfirmReserveButton = styled.div`
 const HotelsContainer = styled.div`
   display: flex;
   margin-bottom: 30px;
+`;
+
+const ChangeRoomButton = styled.button`
+  background-color: #e0e0e0;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  height: 37px;
+  width: 182px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

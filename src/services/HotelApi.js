@@ -22,7 +22,15 @@ export default class HotelApi extends AuthenticatedApi {
     return api.post(`/hotels/bookings`, body, {
       headers: {
         ...this.getAuthorizationHeader(),
-      }
-    })
+      },
+    });
+  }
+
+  changeRoomStatus(body) {
+    return api.post(`/hotels/changeroom`, body, {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      },
+    });
   }
 }

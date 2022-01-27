@@ -2,27 +2,25 @@ import React from "react";
 import styled from "styled-components";
 
 export default function ConfirmedHotel({ bookingDetails }) {
-
   const {
     imageUrl,
     name,
     roomType: roomCapacity,
     roomNumber,
-    confirmedCompanions
-  } = bookingDetails
+    confirmedCompanions,
+  } = bookingDetails;
 
   const roomTypes = {
     1: "Single",
     2: "Double",
-    3: "Triple"
+    3: "Triple",
   };
 
   return (
-
     <ReservationDetails>
       <h4>Você já escolheu seu quarto:</h4>
 
-      <HotelPreviewWrapper >
+      <HotelPreviewWrapper>
         <Banner src={imageUrl} />
         <HotelName>{name}</HotelName>
         <HotelDetails>
@@ -32,31 +30,31 @@ export default function ConfirmedHotel({ bookingDetails }) {
           </div>
           <div>
             <strong>Pessoas no seu quarto</strong>
-            <p>{`${(confirmedCompanions > 0) ? `Você e mais ${confirmedCompanions}` : 'Somente você'}`}</p>
+            <p>{`${
+              confirmedCompanions > 0 ? `Você e mais ${confirmedCompanions}` : "Somente você"
+            }`}</p>
           </div>
         </HotelDetails>
       </HotelPreviewWrapper>
     </ReservationDetails>
-
   );
 }
 
 const ReservationDetails = styled.div`
-  font-family: 'Roboto';
+  font-family: "Roboto";
   h4 {
     font-weight: normal;
     font-size: 20px;
     line-height: 23px;
-    color: #8E8E8E;
+    color: #8e8e8e;
   }
-`
-const HotelPreviewWrapper = styled.div`  
+`;
+const HotelPreviewWrapper = styled.div`
   margin: 14px 20px 0 0;
   width: 196px;
-  background-color: #FFEED2;
+  background-color: #ffeed2;
   padding: 15px;
   border-radius: 10px;
-
 `;
 
 const Banner = styled.img`

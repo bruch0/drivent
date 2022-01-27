@@ -14,20 +14,23 @@ export default function HotelSelection() {
   const [selectedHotelId, setSelectedHotelId] = useState(null);
 
   const [rooms, setRooms] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState(null)
+  const [selectedRoom, setSelectedRoom] = useState(null);
 
-  const [confirmReservation, setConfirmReservation] = useState(false)
-  const [bookingDetails, setBookingDetails] = useState(null)
-  
+  const [confirmReservation, setConfirmReservation] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState(null);
+
   const [isChangingRoom, setIsChangingRoom] = useState(false);
 
   function getBookingDetails() {
-    hotel.getBookingDetails().then((res) => {
-      setBookingDetails(res.data)
-      setConfirmReservation(true)
-    }).catch(() => {
-      // do nothing
-    })
+    hotel
+      .getBookingDetails()
+      .then((res) => {
+        setBookingDetails(res.data);
+        setConfirmReservation(true);
+      })
+      .catch(() => {
+        // do nothing
+      });
   }
 
   function selectHotel(hotelId) {
@@ -38,7 +41,7 @@ export default function HotelSelection() {
     }
   }
 
-  const selectHotelRoom = roomNumber => {
+  const selectHotelRoom = (roomNumber) => {
     setSelectedRoom(roomNumber);
   };
 
@@ -46,26 +49,13 @@ export default function HotelSelection() {
     const body = {
       hotel: selectedHotelId,
       room: selectedRoom,
-    }
-    hotel.saveBooking(body).then(() => {
-      setConfirmReservation(true)
-    }).catch((error) => {
-      if (error.response) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const detail of error.response.data.details) {
-          toast(detail);
-        }
-      } else {
-        toast("Não foi possível conectar ao servidor!");
-      }
-    }).finally(() => {
-      selectHotel(null)
-      getBookingDetails()
-    })
-  }
-
-    if (isChangingRoom) {
-      hotel.changeRoomStatus().catch(error => {
+    };
+    hotel
+      .saveBooking(body)
+      .then(() => {
+        getBookingDetails();
+      })
+      .catch((error) => {
         if (error.response) {
           // eslint-disable-next-line no-restricted-syntax
           for (const detail of error.response.data.details) {
@@ -74,17 +64,36 @@ export default function HotelSelection() {
         } else {
           toast("Não foi possível conectar ao servidor!");
         }
+      })
+      .finally(() => {
+        setSelectedHotelId(null);
       });
-    }
+  };
+
+  if (isChangingRoom) {
+    hotel.changeRoomStatus().catch((error) => {
+      if (error.response) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const detail of error.response.data.details) {
+          toast(detail);
+        }
+      } else {
+        toast("Não foi possível conectar ao servidor!");
+      }
+    });
+  }
 
   useEffect(() => {
     // get hotels
     function setHotelList() {
-      hotel.getHotelsList().then(response => {
-        setHotels(response.data);
-      }).catch(() => {
-        // do nothing
-      });
+      hotel
+        .getHotelsList()
+        .then((response) => {
+          setHotels(response.data);
+        })
+        .catch(() => {
+          // do nothing
+        });
     }
     setHotelList();
   }, []);
@@ -111,9 +120,10 @@ export default function HotelSelection() {
     setIsChangingRoom(true);
   };
 
-  useEffect(() => { // get reservation
-    getBookingDetails()
-  }, [])
+  useEffect(() => {
+    // get reservation
+    getBookingDetails();
+  }, []);
 
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -126,7 +136,7 @@ export default function HotelSelection() {
       ) : (
         <>
           <HotelsContainer>
-            {hotels.map(h => (
+            {hotels.map((h) => (
               <HotelPreview
                 key={h.id}
                 data={h}
@@ -143,11 +153,8 @@ export default function HotelSelection() {
                 selectHotelRoom={selectHotelRoom}
                 selectedRoom={selectedRoom}
               />
-                  
-              <ConfirmReserveButton
-                onClick={confirmBooking}
-                enabled={!!selectedRoom}
-              >
+
+              <ConfirmReserveButton onClick={confirmBooking} enabled={!!selectedRoom}>
                 RESERVAR QUARTO
               </ConfirmReserveButton>
             </>
@@ -186,6 +193,7 @@ const ChangeRoomButton = styled.button`
   font-size: 14px;
   height: 37px;
   width: 182px;
+  margin-top: 25px;
 
   &:hover {
     cursor: pointer;

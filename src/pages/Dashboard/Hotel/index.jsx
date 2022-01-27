@@ -32,20 +32,13 @@ export default function Hotel() {
         "Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades";
     }
   } else {
-    message =
-      "Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem";
+    message = "Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem";
   }
 
   return (
     <>
-      <StyledTypography variant="h4">
-        Escolha de hotel e quarto
-      </StyledTypography>
-      {enabled && enrollmentWithHotel ? (
-        <HotelSelection />
-      ) : (
-        <UnauthorizedTab message={message} />
-      )}
+      <StyledTypography variant="h4">Escolha de hotel e quarto</StyledTypography>
+      {enabled && enrollmentWithHotel ? <HotelSelection /> : <UnauthorizedTab message={message} />}
     </>
   );
 }

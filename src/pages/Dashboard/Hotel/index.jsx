@@ -16,6 +16,7 @@ export default function Hotel() {
   const [loading, setLoading] = useState(true);
 
   payment.getPaymentInfo().then((response) => {
+    console.log(response.data);
     if (response.data.id) {
       setEnabled(true);
       if (response.data.hotel) setEnrollmentWithHotel(true);

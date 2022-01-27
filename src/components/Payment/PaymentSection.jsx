@@ -19,7 +19,6 @@ import {
   ConfirmationContainer,
   ConfirmationTextContainer,
 } from "../../layouts/paymentSection";
-import Loading from "../Shared/Loading";
 import checkDateNHotel from "./paymentHandler";
 
 function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total }) {
@@ -30,17 +29,20 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
   const [cvc, setCvc] = useState("");
   const [focus, setFocus] = useState("");
   const [paid, setPaid] = useState(false);
-  const [loading, setIsLoading] = useState(true);
 
   useLayoutEffect(() => {
     payment.getPaymentInfo().then((response) => {
       if (response.data.id) {
         setPaid(true);
         setTicket(response.data.ticket);
-        setHotel(response.data.hotel);
+        if (response.data.hotel) {
+          setHotel("Com Hotel");
+        } else if (response.data.ticket === "Presencial") {
+          setHotel("Sem Hotel");
+        }
         setTotal(response.data.value);
-        setIsLoading(false);
       }
+      console.log(hotel);
     });
   }, []);
 
@@ -60,8 +62,6 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
     }
   }
 
-  if (loading) return <Loading />;
-
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
@@ -71,7 +71,7 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
           <p> {ticket} </p>
         ) : (
           <p>
-            {ticket} + {hotel ? "Com Hotel" : "Sem Hotel"}
+            {ticket} + {hotel}
           </p>
         )}
         <Price>R$ {total}</Price>
@@ -139,7 +139,7 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
             <p>Pagamento confirmado!</p>
             <span>
               Prossiga para escolha de
-              {hotel ? " hospedagem e " : ""} atividades
+              {hotel === "Sem Hotel" ? "" : " hospedagem "} atividades
             </span>
           </ConfirmationTextContainer>
         </ConfirmationContainer>

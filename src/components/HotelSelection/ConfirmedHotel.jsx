@@ -49,7 +49,6 @@ const ReservationDetails = styled.div`
     line-height: 23px;
     color: #8E8E8E;
   }
-
 `
 const HotelPreviewWrapper = styled.div`  
   margin: 14px 20px 0 0;

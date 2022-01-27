@@ -100,7 +100,6 @@ export default function HotelSelection() {
         <ConfirmedHotel bookingDetails={bookingDetails} />
         :
         <HotelsContainer>
-
           {hotels.map((h) => (
             <HotelPreview
               key={h.id}
@@ -110,7 +109,6 @@ export default function HotelSelection() {
             />
           ))}
         </HotelsContainer>
-
       }
       {selectedHotelId &&
         <>

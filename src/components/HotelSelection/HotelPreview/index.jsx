@@ -32,15 +32,18 @@ const HotelPreviewWrapper = styled.div`
 const Banner = styled.img`
   width: 168px;
   height: 109px;
+  border-radius: 5px;
 `;
 
 const HotelName = styled.h1`
   font-size: 20px;
   font-weight: 400;
+  margin-top: 10px;
 `;
 
 const HotelDetails = styled.div`
-  font-size: 15px;
+  font-size: 13px;
+  line-height: 15px;
   & > div {
     margin: 10px 0px;
   }

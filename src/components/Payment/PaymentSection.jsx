@@ -42,7 +42,6 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
         }
         setTotal(response.data.value);
       }
-      console.log(hotel);
     });
   }, []);
 

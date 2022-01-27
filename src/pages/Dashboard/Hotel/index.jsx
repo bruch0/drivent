@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
-import HotelSelection from "../../../components/HotelSelection/HotelPreview";
+import HotelSelection from "../../../components/HotelSelection";
 import UnauthorizedTab from "../../../components/Shared/UnauthorizedTab";
 import useApi from "../../../hooks/useApi";
 import Loading from "../../../components/Shared/Loading";
@@ -16,7 +16,6 @@ export default function Hotel() {
   const [loading, setLoading] = useState(true);
 
   payment.getPaymentInfo().then((response) => {
-    console.log(response.data);
     if (response.data.id) {
       setEnabled(true);
       if (response.data.hotel) setEnrollmentWithHotel(true);

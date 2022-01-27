@@ -12,9 +12,7 @@ import Enroll from "./pages/Enroll";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 
-import EventInfoContext, {
-  EventInfoProvider,
-} from "./contexts/EventInfoContext";
+import EventInfoContext, { EventInfoProvider } from "./contexts/EventInfoContext";
 import UserContext, { UserProvider } from "./contexts/UserContext";
 
 export default function App() {
@@ -25,27 +23,19 @@ export default function App() {
         <UserProvider>
           <Router>
             <Switch>
-              <ConditionalRoute check={ensureCountdownOngoing} path='/' exact>
+              <ConditionalRoute check={ensureCountdownOngoing} path="/" exact>
                 <Countdown />
               </ConditionalRoute>
 
-              <ConditionalRoute
-                check={ensureCountdownOver}
-                path='/enroll'
-                exact
-              >
+              <ConditionalRoute check={ensureCountdownOver} path="/enroll" exact>
                 <Enroll />
               </ConditionalRoute>
 
-              <ConditionalRoute
-                check={ensureCountdownOver}
-                path='/sign-in'
-                exact
-              >
+              <ConditionalRoute check={ensureCountdownOver} path="/sign-in" exact>
                 <SignIn />
               </ConditionalRoute>
 
-              <ConditionalRoute check={ensureAuthenticated} path='/dashboard'>
+              <ConditionalRoute check={ensureAuthenticated} path="/dashboard">
                 <Dashboard />
               </ConditionalRoute>
             </Switch>

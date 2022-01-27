@@ -153,7 +153,6 @@ export default function HotelSelection() {
                 selectHotelRoom={selectHotelRoom}
                 selectedRoom={selectedRoom}
               />
-
               <ConfirmReserveButton onClick={confirmBooking} enabled={!!selectedRoom}>
                 RESERVAR QUARTO
               </ConfirmReserveButton>

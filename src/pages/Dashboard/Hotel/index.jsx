@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
-import HotelSelection from "../../../components/HotelSelection";
+import HotelSelection from "../../../components/HotelSelection/HotelPreview";
 import UnauthorizedTab from "../../../components/Shared/UnauthorizedTab";
 import useApi from "../../../hooks/useApi";
 

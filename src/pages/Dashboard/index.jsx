@@ -20,7 +20,6 @@ export default function Dashboard() {
   return (
     <DashboardLayout background={eventInfo.backgroundImage}>
       <NavigationBar />
-
       <Container>
         <Switch>
           <Route path={`${match.path}/subscription`} exact>

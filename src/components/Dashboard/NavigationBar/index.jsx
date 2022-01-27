@@ -4,15 +4,10 @@ import { Link, useLocation, useRouteMatch } from "react-router-dom";
 
 import styled from "styled-components";
 
-import {
-  FaFileContract,
-  FaMoneyBill,
-  FaBed,
-  FaCalendarWeek,
-  FaCertificate,
-} from "react-icons/fa";
+import { FaFileContract, FaMoneyBill, FaBed, FaCalendarWeek, FaCertificate } from "react-icons/fa";
 
 import NavigationButton from "./NavigationButton";
+import ExitButton from "./ExitButton";
 
 export default function NavigationBar() {
   const location = useLocation();
@@ -58,6 +53,7 @@ export default function NavigationBar() {
           <span>Certificado</span>
         </NavigationButton>
       </Link>
+      <ExitButton />
     </Container>
   );
 }
@@ -70,6 +66,7 @@ const Container = styled.div`
   width: 100px;
   flex-shrink: 0;
   justify-content: flex-start;
+  position: relative;
 
   > a {
     text-decoration: none;

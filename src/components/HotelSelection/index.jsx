@@ -13,10 +13,10 @@ export default function HotelSelection() {
   const [hotels, setHotels] = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
 
-  const [ rooms, setRooms ] = useState([]);
-  const [ selectedRoom, setSelectedRoom ] = useState(null)
+  const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
 
-  const [confirmReservation, setConfirmReservation] = useState(false)
+  const [confirmReservation, setConfirmReservation] = useState(false);
 
   function selectHotel(hotelId) {
     if (selectedHotelId !== hotelId) {
@@ -27,17 +27,20 @@ export default function HotelSelection() {
   }
 
   const selectHotelRoom = (roomNumber) => {
-    setSelectedRoom(roomNumber)
-  }
+    setSelectedRoom(roomNumber);
+  };
 
   const confirmBooking = () => {
-      const body = {
-        hotel: selectedHotelId,
-        room: selectedRoom,
-      }
-      hotel.saveBooking(body).then(()=>{
-        setConfirmReservation(true)
-      }).catch((error) => {
+    const body = {
+      hotel: selectedHotelId,
+      room: selectedRoom,
+    };
+    hotel
+      .saveBooking(body)
+      .then(() => {
+        setConfirmReservation(true);
+      })
+      .catch((error) => {
         if (error.response) {
           // eslint-disable-next-line no-restricted-syntax
           for (const detail of error.response.data.details) {
@@ -46,13 +49,15 @@ export default function HotelSelection() {
         } else {
           toast("Não foi possível conectar ao servidor!");
         }
-      }).finally(()=>{
-        selectHotel(null)
       })
-  }
+      .finally(() => {
+        selectHotel(null);
+      });
+  };
 
-  useEffect(() => { // get hotels
-    function setHotelList(){
+  useEffect(() => {
+    // get hotels
+    function setHotelList() {
       hotel.getHotelsList().then((response) => {
         setHotels(response.data);
       });
@@ -60,29 +65,28 @@ export default function HotelSelection() {
     setHotelList();
   }, []);
 
-  useEffect(() => { // get rooms
+  useEffect(() => {
+    // get rooms
     setSelectedRoom(null);
 
-    function setHotelRooms(){
-      if(selectedHotelId){
+    function setHotelRooms() {
+      if (selectedHotelId) {
         hotel.getHotelRooms(selectedHotelId).then((response) => {
           if (response.status !== 200) {
             return;
           }
           setRooms(response.data);
         });
-      }      
+      }
     }
-    setHotelRooms()
-  }, [selectedHotelId])
+    setHotelRooms();
+  }, [selectedHotelId]);
 
   return (
     <>
-      {confirmReservation
-        ? 
-        <>
-        </>
-        : 
+      {confirmReservation ? (
+        <></>
+      ) : (
         <>
           <HotelsContainer>
             {hotels.map((h) => (
@@ -94,31 +98,37 @@ export default function HotelSelection() {
               />
             ))}
           </HotelsContainer>
-          {selectedHotelId &&  
-            <> 
-              <HotelWrapper rooms={rooms} selectHotelRoom={selectHotelRoom} selectedRoom={selectedRoom}/> 
-              <ConfirmReserveButton onClick={confirmBooking} enabled={!!selectedRoom}>RESERVAR QUARTO</ConfirmReserveButton>
+          {selectedHotelId && (
+            <>
+              <HotelWrapper
+                rooms={rooms}
+                selectHotelRoom={selectHotelRoom}
+                selectedRoom={selectedRoom}
+              />
+              <ConfirmReserveButton onClick={confirmBooking} enabled={!!selectedRoom}>
+                RESERVAR QUARTO
+              </ConfirmReserveButton>
             </>
-          }      
-        </> 
-      }
-    </>    
+          )}
+        </>
+      )}
+    </>
   );
 }
 
 const ConfirmReserveButton = styled.div`
   width: 182px;
   height: 37px;
-  background: #E0E0E0;
+  background: #e0e0e0;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   margin-top: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
-`
+`;
 
 const HotelsContainer = styled.div`
   display: flex;

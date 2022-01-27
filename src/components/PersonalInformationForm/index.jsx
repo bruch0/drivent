@@ -81,8 +81,8 @@ export default function PersonalInformationForm() {
             for (const detail of error.response.data.details) {
               toast(detail);
             }
-          } else {
-            toast("Não foi possível");
+          } else if (error.response.status === 409) {
+            toast("Este CPF já está cadastrado");
           }
           /* eslint-disable-next-line no-console */
           console.log(error);

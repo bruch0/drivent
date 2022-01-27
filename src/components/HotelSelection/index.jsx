@@ -85,6 +85,7 @@ export default function HotelSelection() {
 
   useEffect(() => {
     // get hotels
+
     function setHotelList() {
       hotel
         .getHotelsList()

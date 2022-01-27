@@ -38,7 +38,7 @@ export default function HotelSelection() {
     };
 
     if (isChangingRoom) {
-      hotel.changeRoomStatus(body).catch(error => {
+      hotel.changeRoomStatus().catch(error => {
         if (error.response) {
           // eslint-disable-next-line no-restricted-syntax
           for (const detail of error.response.data.details) {

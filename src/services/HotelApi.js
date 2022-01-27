@@ -26,8 +26,8 @@ export default class HotelApi extends AuthenticatedApi {
     });
   }
 
-  changeRoomStatus(body) {
-    return api.put(`/hotels/changeroom`, body, {
+  changeRoomStatus() {
+    return api.put(`/hotels/changeroom`, {}, {
       headers: {
         ...this.getAuthorizationHeader(),
       },

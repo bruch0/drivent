@@ -32,7 +32,7 @@ export default function ConfirmedHotel({ bookingDetails }) {
           </div>
           <div>
             <strong>Pessoas no seu quarto</strong>
-            <p>{`Você${(confirmedCompanions > 0) ? ` e mais ${confirmedCompanions}` : ''}`}</p>
+            <p>{`${(confirmedCompanions > 0) ? `Você e mais ${confirmedCompanions}` : 'Somente você'}`}</p>
           </div>
         </HotelDetails>
       </HotelPreviewWrapper>

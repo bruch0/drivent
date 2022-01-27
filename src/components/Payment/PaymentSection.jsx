@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Cards from "react-credit-cards"
 import 'react-credit-cards/es/styles-compiled.css';
+import { toast } from "react-toastify";
 import Button from "../Form/Button";
 import useApi from "../../hooks/useApi";
 import { StyledTypography,
@@ -15,7 +16,8 @@ import { StyledTypography,
   CvcInput,
   CheckIcon,
   ConfirmationContainer,
-  ConfirmationTextContainer } from "../../layouts/paymentSection"
+  ConfirmationTextContainer } from "../../layouts/paymentSection";
+import checkDateNHotel from "./paymentHandler";
 
 function PaymentSection({setTicket, setHotel, setTotal, ticket, hotel, total}) {
   const { payment } = useApi();
@@ -42,20 +44,19 @@ function PaymentSection({setTicket, setHotel, setTotal, ticket, hotel, total}) {
   }, [])
   
   function confirmPayment(){
-    let hotelBoolean;
-    if(hotel === 'Com Hotel'){
-      hotelBoolean = true;
-    }else{
-      hotelBoolean = false;
-    }
+    const checkedData = checkDateNHotel({hotel, expiry, number, cvc})
     const paymentData = {
       ticket, 
-      hotel: hotelBoolean, 
+      hotel: checkedData.hotel, 
       value: total,
     };
-    payment.savePaymentInfo(paymentData).then(() => {
-      setPaid(true);
-    });
+    if(checkedData.expiry && checkedData.number && checkedData.cvc){
+      payment.savePaymentInfo(paymentData).then(() => {
+        setPaid(true);
+      });
+    }else{
+      toast("Data de validade, número do cartão ou CVC inválidos");
+    }
   }  
 
   return (

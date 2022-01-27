@@ -25,4 +25,12 @@ export default class HotelApi extends AuthenticatedApi {
       }
     })
   }
+
+  getBookingDetails(){
+    return api.get(`/hotels/confirm`, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    })
+  }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
@@ -6,6 +5,7 @@ import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
 import HotelPreview from "./HotelPreview";
 import HotelWrapper from "./HotelWrapper";
+import ConfirmedHotel from "./ConfirmedHotel";
 
 export default function HotelSelection() {
   const { hotel } = useApi();
@@ -17,7 +17,21 @@ export default function HotelSelection() {
   const [selectedRoom, setSelectedRoom] = useState(null);
 
   const [confirmReservation, setConfirmReservation] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState(null);
+
   const [isChangingRoom, setIsChangingRoom] = useState(false);
+
+  function getBookingDetails() {
+    hotel
+      .getBookingDetails()
+      .then((res) => {
+        setBookingDetails(res.data);
+        setConfirmReservation(true);
+      })
+      .catch(() => {
+        // do nothing
+      });
+  }
 
   function selectHotel(hotelId) {
     if (selectedHotelId !== hotelId) {
@@ -36,24 +50,10 @@ export default function HotelSelection() {
       hotel: selectedHotelId,
       room: selectedRoom,
     };
-
-    if (isChangingRoom) {
-      hotel.changeRoomStatus().catch((error) => {
-        if (error.response) {
-          // eslint-disable-next-line no-restricted-syntax
-          for (const detail of error.response.data.details) {
-            toast(detail);
-          }
-        } else {
-          toast("Não foi possível conectar ao servidor!");
-        }
-      });
-    }
-
     hotel
       .saveBooking(body)
       .then(() => {
-        setConfirmReservation(true);
+        getBookingDetails();
       })
       .catch((error) => {
         if (error.response) {
@@ -66,16 +66,34 @@ export default function HotelSelection() {
         }
       })
       .finally(() => {
-        selectHotel(null);
+        setSelectedHotelId(null);
       });
   };
+
+  if (isChangingRoom) {
+    hotel.changeRoomStatus().catch((error) => {
+      if (error.response) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const detail of error.response.data.details) {
+          toast(detail);
+        }
+      } else {
+        toast("Não foi possível conectar ao servidor!");
+      }
+    });
+  }
 
   useEffect(() => {
     // get hotels
     function setHotelList() {
-      hotel.getHotelsList().then((response) => {
-        setHotels(response.data);
-      });
+      hotel
+        .getHotelsList()
+        .then((response) => {
+          setHotels(response.data);
+        })
+        .catch(() => {
+          // do nothing
+        });
     }
     setHotelList();
   }, []);
@@ -102,10 +120,19 @@ export default function HotelSelection() {
     setIsChangingRoom(true);
   };
 
+  useEffect(() => {
+    // get reservation
+    getBookingDetails();
+  }, []);
+
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {confirmReservation ? (
-        <ChangeRoomButton onClick={changeRoom}>TROCAR DE QUARTO</ChangeRoomButton>
+        <>
+          <ConfirmedHotel bookingDetails={bookingDetails} />
+          <ChangeRoomButton onClick={changeRoom}>TROCAR DE QUARTO</ChangeRoomButton>
+        </>
       ) : (
         <>
           <HotelsContainer>
@@ -118,6 +145,7 @@ export default function HotelSelection() {
               />
             ))}
           </HotelsContainer>
+
           {selectedHotelId && (
             <>
               <HotelWrapper
@@ -164,6 +192,7 @@ const ChangeRoomButton = styled.button`
   font-size: 14px;
   height: 37px;
   width: 182px;
+  margin-top: 25px;
 
   &:hover {
     cursor: pointer;

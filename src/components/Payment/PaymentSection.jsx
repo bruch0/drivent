@@ -35,11 +35,7 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
       if (response.data.id) {
         setPaid(true);
         setTicket(response.data.ticket);
-        if (response.data.hotel) {
-          setHotel("Com Hotel");
-        } else if (response.data.ticket === "Presencial") {
-          setHotel("Sem Hotel");
-        }
+        setHotel(response.data.hotel);
         setTotal(response.data.value);
         setIsLoading(false);
       }
@@ -47,15 +43,9 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
   }, []);
 
   function confirmPayment() {
-    let hotelBoolean;
-    if (hotel === "Com Hotel") {
-      hotelBoolean = true;
-    } else {
-      hotelBoolean = false;
-    }
     const paymentData = {
       ticket,
-      hotel: hotelBoolean,
+      hotel,
       value: total,
     };
     payment.savePaymentInfo(paymentData).then(() => {
@@ -74,8 +64,7 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
           <p> {ticket} </p>
         ) : (
           <p>
-            {" "}
-            {ticket} + {hotel}{" "}
+            {ticket} + {hotel ? "Com Hotel" : "Sem Hotel"}
           </p>
         )}
         <Price>R$ {total}</Price>
@@ -143,7 +132,7 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
             <p>Pagamento confirmado!</p>
             <span>
               Prossiga para escolha de
-              {hotel === "Sem Hotel" ? "" : " hospedagem "} atividades
+              {hotel ? " hospedagem e " : ""} atividades
             </span>
           </ConfirmationTextContainer>
         </ConfirmationContainer>

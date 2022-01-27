@@ -19,7 +19,7 @@ function TicketReservation({
 
   useEffect(() => {
     const ticketValue = ticket === "Presencial" ? 250 : 100;
-    const hotelValue = hotel === "Com Hotel" ? 350 : 0;
+    const hotelValue = hotel ? 350 : 0;
 
     setTotal(ticketValue + hotelValue);
   }, [hotel]);
@@ -51,19 +51,11 @@ function TicketReservation({
         Ótimo! Agora escolha sua modalidade de hospedagem
       </Subtitle>
       <PaymentContainer display={ticket === "Presencial" ? "grid" : 0}>
-        <Option
-          selected={hotel === "Sem Hotel" ? 1 : 0}
-          onClick={() => setHotel("Sem Hotel")}
-          variant="outlined"
-        >
+        <Option selected={!hotel} onClick={() => setHotel(false)} variant="outlined">
           Sem Hotel
           <Value>+ R$ 0</Value>
         </Option>
-        <Option
-          selected={hotel === "Com Hotel" ? 1 : 0}
-          onClick={() => setHotel("Com Hotel")}
-          variant="outlined"
-        >
+        <Option selected={hotel} onClick={() => setHotel(true)} variant="outlined">
           Com Hotel
           <Value>+ R$ 350</Value>
         </Option>

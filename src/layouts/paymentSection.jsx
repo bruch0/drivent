@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IoCheckmarkCircle } from "react-icons/io5"
 import Typography from "@material-ui/core/Typography";
+import InputMask from "react-input-mask";
 
 const StyledTypography = styled(Typography)`
   margin-bottom: 30px !important;
@@ -53,7 +54,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `
 
-const Input = styled.input`
+const Input = styled(InputMask)`
   margin-top: 10px;
   width: 100%;
   height: 60px;
@@ -66,9 +67,17 @@ const Input = styled.input`
   &::placeholder{
     color: #a1a1a1;
   }
+
+  &:hover{
+    border-color: black;
+  }
+
+  &:Focus{
+    border: 2px solid #112ebf;
+  }
 `
 
-const DateInput = styled.input`
+const DateInput = styled(InputMask)`
   margin-top: 10px;
   width: 60%;
   height: 60px;
@@ -82,9 +91,17 @@ const DateInput = styled.input`
     color: #a1a1a1;
   }  
 
+  &:hover{
+    border-color: black;
+  }
+
+  &:Focus{
+    border: 2px solid #112ebf;
+  }
+
 `
 
-const CvcInput =  styled.input`
+const CvcInput =  styled(InputMask)`
   margin-top: 10px;
   width: 35%;
   height: 60px;
@@ -97,6 +114,14 @@ const CvcInput =  styled.input`
   &::placeholder{
     color: #a1a1a1;
   }  
+
+  &:hover{
+    border-color: black;
+  }
+
+  &:Focus{
+    border: 2px solid #112ebf;
+  }
 `
 
 const CheckIcon = styled(IoCheckmarkCircle)`

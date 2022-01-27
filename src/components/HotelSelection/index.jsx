@@ -18,6 +18,8 @@ export default function HotelSelection() {
 
   const [confirmReservation, setConfirmReservation] = useState(false)
   const [bookingDetails, setBookingDetails] = useState(null)
+  
+  const [isChangingRoom, setIsChangingRoom] = useState(false);
 
   function getBookingDetails() {
     hotel.getBookingDetails().then((res) => {
@@ -36,9 +38,9 @@ export default function HotelSelection() {
     }
   }
 
-  const selectHotelRoom = (roomNumber) => {
-    setSelectedRoom(roomNumber)
-  }
+  const selectHotelRoom = roomNumber => {
+    setSelectedRoom(roomNumber);
+  };
 
   const confirmBooking = () => {
     const body = {
@@ -62,9 +64,23 @@ export default function HotelSelection() {
     })
   }
 
-  useEffect(() => { // get hotels
+    if (isChangingRoom) {
+      hotel.changeRoomStatus().catch(error => {
+        if (error.response) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const detail of error.response.data.details) {
+            toast(detail);
+          }
+        } else {
+          toast("Não foi possível conectar ao servidor!");
+        }
+      });
+    }
+
+  useEffect(() => {
+    // get hotels
     function setHotelList() {
-      hotel.getHotelsList().then((response) => {
+      hotel.getHotelsList().then(response => {
         setHotels(response.data);
       }).catch(() => {
         // do nothing
@@ -73,7 +89,8 @@ export default function HotelSelection() {
     setHotelList();
   }, []);
 
-  useEffect(() => { // get rooms
+  useEffect(() => {
+    // get rooms
     setSelectedRoom(null);
 
     function setHotelRooms() {
@@ -86,36 +103,57 @@ export default function HotelSelection() {
         });
       }
     }
-    setHotelRooms()
-  }, [selectedHotelId])
+    setHotelRooms();
+  }, [selectedHotelId]);
+
+  const changeRoom = () => {
+    setConfirmReservation(false);
+    setIsChangingRoom(true);
+  };
 
   useEffect(() => { // get reservation
     getBookingDetails()
   }, [])
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {confirmReservation
-        ?
-        <ConfirmedHotel bookingDetails={bookingDetails} />
-        :
-        <HotelsContainer>
-          {hotels.map((h) => (
-            <HotelPreview
-              key={h.id}
-              data={h}
-              toggleSelection={() => selectHotel(h.id)}
-              selected={selectedHotelId}
-            />
-          ))}
-        </HotelsContainer>
-      }
-      {selectedHotelId &&
+      {confirmReservation ? (
         <>
-          <HotelWrapper rooms={rooms} selectHotelRoom={selectHotelRoom} selectedRoom={selectedRoom} />
-          <ConfirmReserveButton onClick={confirmBooking} enabled={!!selectedRoom}>RESERVAR QUARTO</ConfirmReserveButton>
+          <ConfirmedHotel bookingDetails={bookingDetails} />
+          <ChangeRoomButton onClick={changeRoom}>TROCAR DE QUARTO</ChangeRoomButton>
         </>
-      }
+      ) : (
+        <>
+          <HotelsContainer>
+            {hotels.map(h => (
+              <HotelPreview
+                key={h.id}
+                data={h}
+                toggleSelection={() => selectHotel(h.id)}
+                selected={selectedHotelId}
+              />
+            ))}
+          </HotelsContainer>
+
+          {selectedHotelId && (
+            <>
+              <HotelWrapper
+                rooms={rooms}
+                selectHotelRoom={selectHotelRoom}
+                selectedRoom={selectedRoom}
+              />
+                  
+              <ConfirmReserveButton
+                onClick={confirmBooking}
+                enabled={!!selectedRoom}
+              >
+                RESERVAR QUARTO
+              </ConfirmReserveButton>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 }
@@ -123,18 +161,33 @@ export default function HotelSelection() {
 const ConfirmReserveButton = styled.div`
   width: 182px;
   height: 37px;
-  background: #E0E0E0;
+  background: #e0e0e0;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   margin-top: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
-`
+`;
 
 const HotelsContainer = styled.div`
   display: flex;
   margin-bottom: 30px;
+`;
+
+const ChangeRoomButton = styled.button`
+  background-color: #e0e0e0;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  height: 37px;
+  width: 182px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import HotelSelection from "../../../components/HotelSelection";
 import UnauthorizedTab from "../../../components/Shared/UnauthorizedTab";
 import useApi from "../../../hooks/useApi";
+import Loading from "../../../components/Shared/Loading";
 
 export default function Hotel() {
   const { payment } = useApi();
@@ -12,13 +13,18 @@ export default function Hotel() {
 
   const [enabled, setEnabled] = useState(false);
   const [enrollmentWithHotel, setEnrollmentWithHotel] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   payment.getPaymentInfo().then((response) => {
     if (response.data.id) {
       setEnabled(true);
       if (response.data.hotel) setEnrollmentWithHotel(true);
     }
+
+    setLoading(false);
   });
+
+  if (loading) return <Loading />;
 
   if (enabled) {
     if (!enrollmentWithHotel) {
@@ -26,13 +32,20 @@ export default function Hotel() {
         "Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades";
     }
   } else {
-    message = "Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem";
+    message =
+      "Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem";
   }
 
   return (
     <>
-      <StyledTypography variant="h4">Escolha de hotel e quarto</StyledTypography>
-      {enabled && enrollmentWithHotel ? <HotelSelection /> : <UnauthorizedTab message={message} />}
+      <StyledTypography variant="h4">
+        Escolha de hotel e quarto
+      </StyledTypography>
+      {enabled && enrollmentWithHotel ? (
+        <HotelSelection />
+      ) : (
+        <UnauthorizedTab message={message} />
+      )}
     </>
   );
 }

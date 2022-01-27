@@ -26,6 +26,7 @@ const HotelPreviewWrapper = styled.div`
   width: 196px;
   background-color: ${(props) => (props.selected ? "#FFEED2" : "#f1f1f1")};
   padding: 15px;
+  border-radius: 5px;
   cursor: pointer;
 `;
 

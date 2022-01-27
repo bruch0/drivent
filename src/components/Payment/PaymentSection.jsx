@@ -82,11 +82,11 @@ function PaymentSection({setTicket, setHotel, setTotal, ticket, hotel, total}) {
         e.preventDefault();
         confirmPayment();
       } }>
-        <Input type="text" name='number' placeholder="Card Number" value={number} onChange={(e) => setNumber(e.target.value)} onFocus={(e) => setFocus(e.target.name)} maxLength={16} required />
+        <Input mask="9999 9999 9999 9999" type="text" name='number' placeholder="Card Number" value={number} onChange={(e) => setNumber(e.target.value)} onFocus={(e) => setFocus(e.target.name)} required />
         <Input type="text" name='name' placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => setFocus(e.target.name)} required />
         <Wrapper>
-          <DateInput type="text" name='expiry' placeholder="Valid Thru (MM/YY)" value={expiry} onChange={(e) => setExpiry(e.target.value)} onFocus={(e) => setFocus(e.target.name)} maxLength={4} required />
-          <CvcInput type="tel" name='cvc' placeholder="CVC" value={cvc} onChange={(e) => setCvc(e.target.value)} onFocus={(e) => setFocus(e.target.name)} maxLength={3} required />
+          <DateInput mask="99/99" type="text" name='expiry' placeholder="Valid Thru (MM/YY)" value={expiry} onChange={(e) => setExpiry(e.target.value)} onFocus={(e) => setFocus(e.target.name)} required />
+          <CvcInput mask="999" type="tel" name='cvc' placeholder="CVC" value={cvc} onChange={(e) => setCvc(e.target.value)} onFocus={(e) => setFocus(e.target.name)} required />
         </Wrapper>
         <Button type='submit'>Finalizar Pagamento</Button>
       </Form>

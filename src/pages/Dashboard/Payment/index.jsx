@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 
 import useApi from "../../../hooks/useApi";
 import TicketReservation from "../../../components/Payment/Ticket";
@@ -19,17 +19,19 @@ export default function Payment() {
 
   const [loading, setLoading] = useState(true);
 
-  payment.getPaymentInfo().then((response) => {
-    if (response.data.id) {
-      setPaid(true);
-    }
-  });
+  useLayoutEffect(() => {
+    payment.getPaymentInfo().then((response) => {
+      if (response.data.id) {
+        setPaid(true);
+      }
+    });
 
-  enrollment.getPersonalInformations().then((response) => {
-    if (response.data.id) setEnabled(true);
+    enrollment.getPersonalInformations().then((response) => {
+      if (response.data.id) setEnabled(true);
 
-    setLoading(false);
-  });
+      setLoading(false);
+    });
+  }, []);
 
   if (loading) return <Loading />;
 

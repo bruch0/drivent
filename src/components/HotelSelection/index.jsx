@@ -46,6 +46,19 @@ export default function HotelSelection() {
   };
 
   const confirmBooking = () => {
+    if (isChangingRoom) {
+      hotel.changeRoomStatus().catch((error) => {
+        if (error.response) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const detail of error.response.data.details) {
+            toast(detail);
+          }
+        } else {
+          toast("Não foi possível conectar ao servidor!");
+        }
+      });
+    }
+
     const body = {
       hotel: selectedHotelId,
       room: selectedRoom,
@@ -69,19 +82,6 @@ export default function HotelSelection() {
         setSelectedHotelId(null);
       });
   };
-
-  if (isChangingRoom) {
-    hotel.changeRoomStatus().catch((error) => {
-      if (error.response) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const detail of error.response.data.details) {
-          toast(detail);
-        }
-      } else {
-        toast("Não foi possível conectar ao servidor!");
-      }
-    });
-  }
 
   useEffect(() => {
     // get hotels

@@ -1,13 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
+import useApi from "../../hooks/useApi";
+import convertDateToEventFormat from "./DateHandler";
+import { ButtonsWrapper, ActivityButton } from "./ActivityButtons";
 
 export default function ActivitiesSelection() {
+  const { activity } = useApi();
+
+  const [dates, setDates] = useState([]);
+
+  function getDates() {
+    activity
+      .getActivitiesDate()
+      .then(res => {
+        setDates(res.data);
+      })
+      .catch(error => {
+        if (error.response) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const detail of error.response.data.details) {
+            toast(detail);
+          }
+        } else {
+          toast("Não foi possível conectar ao servidor!");
+        }
+      });
+  }
+
+  useEffect(() => getDates(), []);
+
   return (
     <>
       <ActivityMsg>Primeiro, filtre pelo dia do evento: </ActivityMsg>
       <ButtonsWrapper>
-        <ActivityButton>22/10</ActivityButton>
-        <ActivityButton>22/10</ActivityButton>
+        {dates.map(date => (
+          <ActivityButton key={date.id}>
+            {convertDateToEventFormat(date.time)}
+          </ActivityButton>
+        ))}
       </ButtonsWrapper>
     </>
   );
@@ -19,17 +50,3 @@ export const ActivityMsg = styled.p`
   font-size: 20px;
   margin: 35px 0 30px 0;
 `;
-
-export const ActivityButton = styled.button`
-  background-color: #e0e0e0;
-  border-radius: 4px;
-  border: none;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-  height: 37px;
-  margin-right: 15px;
-  width: 131px;
-`;
-
-export const ButtonsWrapper = styled.div``;

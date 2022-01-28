@@ -5,6 +5,7 @@ import StyledTypography from "@material-ui/core/Typography";
 import useApi from "../../../hooks/useApi";
 import UnauthorizedTab from "../../../components/Shared/UnauthorizedTab";
 import Loading from "../../../components/Shared/Loading";
+import VacancyButton from "../../../components/Activities/VacancyIcon";
 
 export default function Activities() {
   const { payment } = useApi();
@@ -38,6 +39,9 @@ atividade. Você terá acesso a todas as atividades."
     );
 
   return (
-    <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
+    <>
+      <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
+      {paid && !onlineTicket ? <VacancyButton /> : ""}
+    </>
   );
 }

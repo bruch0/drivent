@@ -27,7 +27,7 @@ const VacancyButtonWrapper = styled.div`
   height: 100%;
 
   & > p {
-    font-size: 9px;
+    font-size: 10px;
     margin-top: 5px;
   }
 `;

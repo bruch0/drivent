@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
 import convertDateToEventFormat from "./DateHandler";
 import { ButtonsWrapper, ActivityButton } from "./ActivityButtons";
+import Schedule from "./schedule";
 
 export default function ActivitiesSelection() {
   const { activity } = useApi();
@@ -40,6 +41,7 @@ export default function ActivitiesSelection() {
           </ActivityButton>
         ))}
       </ButtonsWrapper>
+      <Schedule />
     </>
   );
 }

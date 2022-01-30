@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
-import convertDateToEventFormat from "./DateHandler";
 import { ButtonsWrapper, ActivityButton } from "./ActivityButtons";
-import Schedule from "./schedule";
+import Schedule from "./Schedule";
+import convertDateToEventFormat from "./DateHandler";
 
 export default function ActivitiesSelection() {
   const { activity } = useApi();
 
   const [dates, setDates] = useState([]);
-  // const [day, setDay] = useState('04/02/2022');
+  const [day, setDay] = useState('04/02/2022');
 
   function getDates() {
     activity
@@ -42,7 +42,7 @@ export default function ActivitiesSelection() {
           </ActivityButton>
         ))}
       </ButtonsWrapper>
-      <Schedule />
+      <Schedule day={day} setDay={setDay} />
     </>
   );
 }

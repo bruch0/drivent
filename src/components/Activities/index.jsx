@@ -10,6 +10,7 @@ export default function ActivitiesSelection() {
   const { activity } = useApi();
 
   const [dates, setDates] = useState([]);
+  // const [day, setDay] = useState('04/02/2022');
 
   function getDates() {
     activity

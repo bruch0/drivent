@@ -9,4 +9,14 @@ export default class ActivitiesApi extends AuthenticatedApi {
       },
     });
   }
+
+  getActivitiesByDay(time) {
+    return api.get("/activities/activities", {
+      headers: {
+        ...this.getAuthorizationHeader(),
+        Time1: `${time} 09:00:00`,
+        Time2: `${time} 10:00:00`,
+      },
+    });
+  }
 }

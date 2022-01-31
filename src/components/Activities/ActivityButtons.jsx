@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ActivityButton = styled.button`
-  background-color: #e0e0e0;
+  background-color: ${({selected}) => selected ? '#FFD37D' : '#e0e0e0'};
   border-radius: 4px;
   border: none;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);

@@ -3,8 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { BsBoxArrowInRight, BsXCircle } from "react-icons/bs";
 
-// TO-DO vacancy mockado, é melhor receber a vacância via props do pai pra nao ter que fazer outra requisicao pra API
-export default function VacancyIcon({ vacancy = 0 }) {
+export default function VacancyIcon({ vacancy }) {
   const isFull = vacancy === 0;
 
   return (
@@ -20,10 +19,9 @@ const VacancyButtonWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px 10px;
+  padding: 2px 10px;
   color: ${(props) => (props.isFull ? "red" : "green")};
   font-size: 28px;
-  width: 100%;
   height: 100%;
 
   & > p {

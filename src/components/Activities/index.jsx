@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
-import convertDateToEventFormat from "./DateHandler";
+import { filterByDay, convertDateToEventFormat } from "./DateHandler";
 import { ButtonsWrapper, ActivityButton } from "./ActivityButtons";
 
 export default function ActivitiesSelection() {
@@ -29,6 +29,8 @@ export default function ActivitiesSelection() {
   }
 
   useEffect(() => getDates(), []);
+
+  filterByDay(dates);
 
   return (
     <>

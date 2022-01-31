@@ -15,8 +15,8 @@ export default function Schedule({day}){
     useEffect(() => {
         activity.getActivitiesByDay(day)
             .then((resp) => filterActivities(resp.data, setMainActivities, setSideActivities, setWorkshopActivities))
-            .catch(() => toast("Erro de conexão com o servidor"));
-    }, [])
+            .catch(() => toast("Nenhuma atividade encontrada"));
+    }, [day])
 
     return(        
             <ScheduleContainer>

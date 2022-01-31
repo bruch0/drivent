@@ -182,6 +182,7 @@ const ConfirmReserveButton = styled.div`
   justify-content: center;
   font-family: "Roboto";
   font-size: 14px;
+  cursor: pointer;
 `;
 
 const HotelsContainer = styled.div`

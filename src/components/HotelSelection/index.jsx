@@ -24,7 +24,7 @@ export default function HotelSelection() {
   function getBookingDetails() {
     hotel
       .getBookingDetails()
-      .then((res) => {
+      .then(res => {
         setBookingDetails(res.data);
         setConfirmReservation(true);
       })
@@ -41,13 +41,13 @@ export default function HotelSelection() {
     }
   }
 
-  const selectHotelRoom = (roomNumber) => {
+  const selectHotelRoom = roomNumber => {
     setSelectedRoom(roomNumber);
   };
 
   const confirmBooking = () => {
     if (isChangingRoom) {
-      hotel.changeRoomStatus().catch((error) => {
+      hotel.changeRoomStatus().catch(error => {
         if (error.response) {
           // eslint-disable-next-line no-restricted-syntax
           for (const detail of error.response.data.details) {
@@ -68,7 +68,7 @@ export default function HotelSelection() {
       .then(() => {
         getBookingDetails();
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response) {
           // eslint-disable-next-line no-restricted-syntax
           for (const detail of error.response.data.details) {
@@ -89,7 +89,7 @@ export default function HotelSelection() {
     function setHotelList() {
       hotel
         .getHotelsList()
-        .then((response) => {
+        .then(response => {
           setHotels(response.data);
         })
         .catch(() => {
@@ -105,7 +105,7 @@ export default function HotelSelection() {
 
     function setHotelRooms() {
       if (selectedHotelId) {
-        hotel.getHotelRooms(selectedHotelId).then((response) => {
+        hotel.getHotelRooms(selectedHotelId).then(response => {
           if (response.status !== 200) {
             return;
           }
@@ -132,12 +132,14 @@ export default function HotelSelection() {
       {confirmReservation ? (
         <>
           <ConfirmedHotel bookingDetails={bookingDetails} />
-          <ChangeRoomButton onClick={changeRoom}>TROCAR DE QUARTO</ChangeRoomButton>
+          <ChangeRoomButton onClick={changeRoom}>
+            TROCAR DE QUARTO
+          </ChangeRoomButton>
         </>
       ) : (
         <>
           <HotelsContainer>
-            {hotels.map((h) => (
+            {hotels.map(h => (
               <HotelPreview
                 key={h.id}
                 data={h}
@@ -154,7 +156,10 @@ export default function HotelSelection() {
                 selectHotelRoom={selectHotelRoom}
                 selectedRoom={selectedRoom}
               />
-              <ConfirmReserveButton onClick={confirmBooking} enabled={!!selectedRoom}>
+              <ConfirmReserveButton
+                onClick={confirmBooking}
+                enabled={!!selectedRoom}
+              >
                 RESERVAR QUARTO
               </ConfirmReserveButton>
             </>

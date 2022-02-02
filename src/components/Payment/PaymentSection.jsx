@@ -19,9 +19,17 @@ import {
   ConfirmationContainer,
   ConfirmationTextContainer,
 } from "../../layouts/paymentSection";
+import Loading from "../Shared/Loading";
 import checkDateNHotel from "./paymentHandler";
 
-function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total }) {
+function PaymentSection({
+  setTicket,
+  setHotel,
+  setTotal,
+  ticket,
+  hotel,
+  total,
+}) {
   const { payment } = useApi();
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
@@ -29,6 +37,7 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
   const [cvc, setCvc] = useState("");
   const [focus, setFocus] = useState("");
   const [paid, setPaid] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
     payment.getPaymentInfo().then((response) => {
@@ -42,6 +51,8 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
         }
         setTotal(response.data.value);
       }
+
+      setLoading(false);
     });
   }, []);
 
@@ -61,6 +72,8 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
     }
   }
 
+  if (loading) return <Loading />;
+
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
@@ -79,7 +92,13 @@ function PaymentSection({ setTicket, setHotel, setTotal, ticket, hotel, total })
       {!paid ? (
         <CardContainer>
           <div>
-            <Cards number={number} name={name} expiry={expiry} cvc={cvc} focused={focus} />
+            <Cards
+              number={number}
+              name={name}
+              expiry={expiry}
+              cvc={cvc}
+              focused={focus}
+            />
           </div>
           <Form
             onSubmit={(e) => {

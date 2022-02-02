@@ -24,12 +24,11 @@ export default function Payment() {
       if (response.data.id) {
         setPaid(true);
       }
-    });
 
-    enrollment.getPersonalInformations().then((response) => {
-      if (response.data.id) setEnabled(true);
-
-      setLoading(false);
+      enrollment.getPersonalInformations().then((res) => {
+        setLoading(false);
+        if (res.data.id) setEnabled(true);
+      });
     });
   }, []);
 
@@ -44,6 +43,7 @@ export default function Payment() {
         ticket={ticket}
         hotel={hotel}
         total={total}
+        setLoading={setLoading}
       />
     );
 

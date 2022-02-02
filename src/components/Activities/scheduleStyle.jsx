@@ -36,6 +36,7 @@ const ActivityContainer = styled.div`
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
+  cursor: pointer;
 `;
 
 const InfoContainer = styled.div`

@@ -6,8 +6,6 @@ import convertTime from "./timeHandler";
 import VacancyIcon from "./VacancyIcon";
 import useApi from "../../hooks/useApi";
 
-
-
 export default function Activity({ duration, element }) {
   const [isScheduled, setIsScheduled] = useState(false)
   const { activity } = useApi();
@@ -29,7 +27,8 @@ export default function Activity({ duration, element }) {
       showCancelButton: true,
       confirmButtonColor: '#fa4697',
       cancelButtonColor: '#ffd57f',
-      confirmButtonText: 'Me inscrever!'
+      confirmButtonText: 'Me inscrever!',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
         activity.postNewActivity(element.id).then(() => {

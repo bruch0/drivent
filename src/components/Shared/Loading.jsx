@@ -11,7 +11,7 @@ export default function Loading() {
 }
 
 const BigLoading = styled(LoadingIcon)`
-  width: 35%;
+  width: 15%;
 `;
 
 const Main = styled.main`

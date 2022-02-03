@@ -38,9 +38,7 @@ export default function SignIn() {
 
         if (error.response) {
           // eslint-disable-next-line no-restricted-syntax
-          for (const detail of error.response.data.details) {
-            toast(detail);
-          }
+          toast("E-email e/ou senha inválidos");
         } else {
           toast("Não foi possível conectar ao servidor!");
         }
@@ -73,12 +71,7 @@ export default function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button
-            type="submit"
-            color="primary"
-            fullWidth
-            disabled={loadingSignIn}
-          >
+          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>
             Entrar
           </Button>
         </form>

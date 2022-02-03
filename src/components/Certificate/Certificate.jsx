@@ -66,4 +66,5 @@ const CertificateTitle = styled.h1`
 const CertificateText = styled.p`
   font-size: 24px;
   text-align: center;
+  margin: 0 10px 0 10px;
 `;

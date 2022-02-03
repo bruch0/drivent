@@ -40,14 +40,7 @@ export default function PersonalInformationForm() {
     }
   }, 200);
 
-  const {
-    handleSubmit,
-    handleChange,
-    data,
-    errors,
-    setData,
-    customHandleChange,
-  } = useForm({
+  const { handleSubmit, handleChange, data, errors, setData, customHandleChange } = useForm({
     validations: FormValidations,
 
     onSubmit: (data) => {
@@ -77,9 +70,11 @@ export default function PersonalInformationForm() {
         })
         .catch((error) => {
           if (error.response?.data?.details) {
-            // eslint-disable-next-line no-restricted-syntax
-            for (const detail of error.response.data.details) {
-              toast(detail);
+            if (
+              error.response?.data.details[1] ===
+              '"phone" length must be at least 14 characters long'
+            ) {
+              toast("Preencha o campo de Telefone corretamente");
             }
           } else if (error.response.status === 409) {
             toast("Este CPF já está cadastrado");
@@ -197,14 +192,9 @@ export default function PersonalInformationForm() {
               label="Data de Nascimento"
               inputVariant="outlined"
               clearable
-              value={
-                data.birthday && dayjs(data.birthday, "DD-MM-YYYY").toString()
-              }
+              value={data.birthday && dayjs(data.birthday, "DD-MM-YYYY").toString()}
               onChange={(date) => {
-                customHandleChange(
-                  "birthday",
-                  (d) => d && dayjs(d).format("DD-MM-YYYY")
-                )(date);
+                customHandleChange("birthday", (d) => d && dayjs(d).format("DD-MM-YYYY"))(date);
               }}
             />
             {errors.birthday && <ErrorMsg>{errors.birthday}</ErrorMsg>}
@@ -212,9 +202,7 @@ export default function PersonalInformationForm() {
           <InputWrapper>
             <Input
               label="Telefone"
-              mask={
-                data.phone.length < 15 ? "(99) 9999-99999" : "(99) 99999-9999"
-              } // o 9 extra no primeiro é para permitir digitar um número a mais e então passar pra outra máscara - gambiarra? temos
+              mask={data.phone.length < 15 ? "(99) 9999-99999" : "(99) 99999-9999"} // o 9 extra no primeiro é para permitir digitar um número a mais e então passar pra outra máscara - gambiarra? temos
               name="phone"
               value={data.phone || ""}
               onChange={handleChange("phone")}

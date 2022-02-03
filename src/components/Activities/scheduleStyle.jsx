@@ -31,18 +31,18 @@ const ActivitiesContainer = styled.div`
 const ActivityContainer = styled.div`
   width: 100%;
   height: ${(props) => (props.duration === 1 ? "80px" : "170px")};
-  background-color: #f1f1f1;
+  background-color: ${(props) => (props.scheduled ? "#D0FFDB" : "#f1f1f1")} ;
   border-radius: 5px;
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
-  cursor: pointer;
+  cursor: ${(props) => (props.scheduled ? 'not-allowed' : 'pointer')};
 `;
 
 const InfoContainer = styled.div`
   width: 70%;
   height: 100%;
-  border-right: 2px solid #cfcfcf;
+  border-right: 2px solid ${(props) => (props.scheduled ? "#99E8A1" : "#cfcfcf")};
   display: flex;
   flex-direction: column;
   font-family: "Roboto";

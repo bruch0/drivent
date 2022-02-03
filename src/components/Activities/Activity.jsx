@@ -21,6 +21,7 @@ export default function Activity({ duration, element }) {
   }, [])
 
   function subscribeActivity() {
+    if (isScheduled) return
     Swal.fire({
       title: 'Você tem certeza que deseja se inscrever nessa atividade?',
       text: "Essa ação não pode ser desfeita.",
@@ -46,8 +47,8 @@ export default function Activity({ duration, element }) {
   }
 
   return (
-    <ActivityContainer duration={duration} onClick={() => subscribeActivity()}>
-      <InfoContainer>
+    <ActivityContainer scheduled={isScheduled} duration={duration} onClick={() => subscribeActivity()}>
+      <InfoContainer scheduled={isScheduled}>
         <p>{element.name}</p>
         <span>
           {convertTime(element.time)}:00 - {Number(convertTime(element.time)) + duration}:00

@@ -8,7 +8,7 @@ export default function VacancyIcon({ vacancy, isRegistered }) {
   const isFull = vacancy === 0;
 
   return (
-    <VacancyButtonWrapper isFull={isFull}>
+    <VacancyButtonWrapper isRegistered={isRegistered} isFull={isFull}>
       {isRegistered ? <BsCheckCircle /> : (isFull ? <EventFullIcon /> : <EnterIcon />)}
       {isRegistered ? <p>Inscrito</p> : (isFull ? <p>Esgotado</p> : <p>{vacancy} vagas</p>)}
     </VacancyButtonWrapper>
@@ -20,9 +20,11 @@ const VacancyButtonWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  margin-left: ${(props) => (props.isRegistered ? "12px" : '4px')};
   padding: 2px 10px;
-  color: ${(props) => (props.isFull ? "red" : "green")};
-  font-size: 28px;
+  color: ${(props) => ((!props.isFull || props.isRegistered) ? "green" : "red")};
+  font-size: ${(props) => (props.isRegistered ? "24px" : "28px")};
   height: 100%;
 
   & > p {

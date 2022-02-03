@@ -30,4 +30,12 @@ export default class ActivitiesApi extends AuthenticatedApi {
       }
     })
   }
+
+  getActivityStatus(id){
+    return api.get(`/activities/activity/${id}`, {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      }
+    })
+  }
 }

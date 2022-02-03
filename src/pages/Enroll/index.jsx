@@ -32,6 +32,7 @@ export default function Enroll() {
 
     if (password !== confirmPassword) {
       toast("As senhas devem ser iguais!");
+      setLoadingEnroll(false);
     } else {
       api.user
         .signUp(email, password)
@@ -41,8 +42,10 @@ export default function Enroll() {
         })
         .catch((error) => {
           if (error.response) {
-            for (const detail of error.response.data.details) {
-              toast(detail);
+            if (error.response.status === 409) {
+              toast("E-mail já cadastrado");
+            } else {
+              toast("Preencha os campos corretamente");
             }
           } else {
             toast("Não foi possível conectar ao servidor!");
@@ -84,12 +87,7 @@ export default function Enroll() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <Button
-            type="submit"
-            color="primary"
-            fullWidth
-            disabled={loadingEnroll}
-          >
+          <Button type="submit" color="primary" fullWidth disabled={loadingEnroll}>
             Inscrever
           </Button>
         </form>

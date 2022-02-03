@@ -38,6 +38,7 @@ function PaymentSection({
   const [focus, setFocus] = useState("");
   const [paid, setPaid] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isAmex, setIsAmex] = useState(false);
 
   useLayoutEffect(() => {
     payment.getPaymentInfo().then((response) => {
@@ -55,6 +56,17 @@ function PaymentSection({
       setLoading(false);
     });
   }, []);
+
+  function checkAmex(){
+    if(number){
+      if(number[0] !== '3') {
+        setIsAmex(false);
+      }else{
+        setIsAmex(true);
+      }
+    }
+  
+  }
 
   function confirmPayment() {
     const checkedData = checkDateNHotel({ hotel, expiry, number, cvc });
@@ -107,12 +119,12 @@ function PaymentSection({
             }}
           >
             <Input
-              mask="9999 9999 9999 9999"
+              mask={isAmex ? "9999 999999 99999" : "9999 9999 9999 9999"}
               type="text"
               name="number"
               placeholder="Card Number"
               value={number}
-              onChange={(e) => setNumber(e.target.value)}
+              onChange={(e) => {setNumber(e.target.value); checkAmex()}}
               onFocus={(e) => setFocus(e.target.name)}
               required
             />
@@ -137,7 +149,7 @@ function PaymentSection({
                 required
               />
               <CvcInput
-                mask="999"
+                mask={isAmex ? "9999" : "999"}
                 type="tel"
                 name="cvc"
                 placeholder="CVC"

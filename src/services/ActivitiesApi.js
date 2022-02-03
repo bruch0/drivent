@@ -19,4 +19,23 @@ export default class ActivitiesApi extends AuthenticatedApi {
       },
     });
   }
+
+  postNewActivity(id){
+    const body = {
+      activityId: id
+    }
+    return api.post("/activities/subscribe", body, {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      }
+    })
+  }
+
+  getActivityStatus(id){
+    return api.get(`/activities/activity/${id}`, {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      }
+    })
+  }
 }

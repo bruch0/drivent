@@ -15,7 +15,7 @@ export default function CertificateFrame() {
       <PrintButton
         onClick={() =>
           window.open(
-            `https://drivent--api.herokuapp.com//certificate/${userId}`
+            `https://drivent--api.herokuapp.com/certificate/${userId}`
           )
         }
       >

@@ -1,15 +1,16 @@
+/* eslint-disable no-nested-ternary */
 import React from "react";
 
 import styled from "styled-components";
-import { BsBoxArrowInRight, BsXCircle } from "react-icons/bs";
+import { BsBoxArrowInRight, BsXCircle, BsCheckCircle } from "react-icons/bs";
 
-export default function VacancyIcon({ vacancy }) {
+export default function VacancyIcon({ vacancy, isRegistered }) {
   const isFull = vacancy === 0;
 
   return (
     <VacancyButtonWrapper isFull={isFull}>
-      {isFull ? <EventFullIcon /> : <EnterIcon />}
-      {isFull ? <p>Esgotado</p> : <p>{vacancy} vagas</p>}
+      {isRegistered ? <BsCheckCircle /> : (isFull ? <EventFullIcon /> : <EnterIcon />)}
+      {isRegistered ? <p>Inscrito</p> : (isFull ? <p>Esgotado</p> : <p>{vacancy} vagas</p>)}
     </VacancyButtonWrapper>
   );
 }
